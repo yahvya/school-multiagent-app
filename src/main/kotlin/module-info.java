@@ -8,5 +8,7 @@ module yahvya.implementation {
     requires io.github.microutils.kotlinlogging;
     requires ch.qos.logback.core;
 
+    opens yahvya.implementation.multiagent.agent;
+
     exports yahvya.implementation;
 }

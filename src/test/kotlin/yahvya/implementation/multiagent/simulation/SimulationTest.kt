@@ -36,6 +36,18 @@ class SimulationTest {
                 listOf(),
             )
         )
+
+        /**
+         * @return created simulation
+         */
+        fun createTestLaunchSimulation() = Simulation(
+            name = "test",
+            environment = Environment(),
+            agentsInitialConfig = mutableListOf(
+                listOf(TestInit.BehaviourOne::class.java, TestInit.BehaviourTwo::class.java),
+                listOf(TestInit.BehaviourOne::class.java)
+            )
+        )
     }
 
     @Test
@@ -72,5 +84,15 @@ class SimulationTest {
                }
            }
         }
+    }
+
+    @Test
+    fun testSimulation(){
+        val simulation = createTestLaunchSimulation()
+
+        val execution = Thread(simulation)
+
+        execution.start()
+        execution.join()
     }
 }

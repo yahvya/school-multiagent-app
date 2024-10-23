@@ -33,7 +33,9 @@ object TestInit {
 
         override fun buildConfiguration(): Map<*, *> = mapOf<String,Any>()
 
-        override fun action() {}
+        override fun action() {
+            this.myAgent.doDelete()
+        }
 
         override fun done(): Boolean = false
 
@@ -45,7 +47,9 @@ object TestInit {
 
         override fun buildConfiguration(): Map<*, *> = mapOf<String,Any>()
 
-        override fun action() {}
+        override fun action() {
+            this.myAgent.doDelete()
+        }
 
         override fun done(): Boolean = false
 

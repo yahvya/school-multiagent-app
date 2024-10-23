@@ -4,6 +4,7 @@ import jade.core.Agent
 import yahvya.implementation.configurations.ApplicationConfig
 import yahvya.implementation.multiagent.interfaces.Box
 import yahvya.implementation.multiagent.interfaces.Exportable
+import yahvya.implementation.multiagent.simulation.Simulation
 
 /**
  * @brief application agent
@@ -18,6 +19,11 @@ class AppAgent : Agent(), Exportable{
      * @brief agent current behaviours
      */
     val behaviours: MutableList<AppAgentBehaviour> = mutableListOf()
+
+    /**
+     * @brief parent simulation
+     */
+    lateinit var parentSimulation: Simulation
 
     /**
      * @brief remove a behaviour to the agent
@@ -41,6 +47,27 @@ class AppAgent : Agent(), Exportable{
         this.behaviours.add(behaviour)
 
         return this
+    }
+
+    override fun setup() {
+        if(
+            this.arguments.size < 2 ||
+            this.arguments[0] !is Simulation ||
+            this.arguments[1] !is List<*>
+        )
+            return
+
+        this.parentSimulation = this.arguments[0] as Simulation
+        val defaultBehaviours = this.arguments[1] as List<*>
+
+        defaultBehaviours.forEach{ potentialDefaultBehaviour ->
+            val potentialDefaultBehaviourAsClass = potentialDefaultBehaviour as Class<*>
+
+            if(!AppAgentBehaviour::class.java.isAssignableFrom(potentialDefaultBehaviourAsClass))
+                return
+
+            this.addAppAgentBehaviour(behaviour = potentialDefaultBehaviourAsClass.getConstructor().newInstance() as AppAgentBehaviour)
+        }
     }
 
     override fun loadFromExportedConfig(configuration: Map<*, *>): Boolean {
