@@ -183,8 +183,10 @@ open class Simulation(
                 agentContainer.start()
             }
 
-            while(!this.stop.get())
+            while(!this.stop.get()){
                 Thread.sleep(500)
+                this.environment.update()
+            }
 
             this.manageEnd()
         }
