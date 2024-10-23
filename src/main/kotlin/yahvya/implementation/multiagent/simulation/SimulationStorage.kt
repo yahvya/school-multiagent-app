@@ -1,8 +1,11 @@
 package yahvya.implementation.multiagent.simulation
 
+import com.google.gson.Gson
 import yahvya.implementation.configurations.ApplicationConfig
 import java.io.InputStream
+import java.io.InputStreamReader
 import java.io.OutputStream
+import java.io.OutputStreamWriter
 
 /**
  * @brief simulation storage manager
@@ -21,6 +24,9 @@ object SimulationStorage {
         try{
             val simulationConfig = simulation.exportConfig()
 
+            OutputStreamWriter(outputStream).use{ outputStreamWriter ->
+                Gson().toJson(simulationConfig,outputStreamWriter)
+            }
 
             return true
         }
@@ -40,8 +46,9 @@ object SimulationStorage {
     fun loadFrom(inputStream: InputStream): Simulation{
         ApplicationConfig.LOGGER.info("Loading simulation from input stream <$inputStream>")
 
-        val decodedConfig =
-
-        return Simulation.createFromConfiguration(configuration = decodedConfig)
+        InputStreamReader(inputStream).use{ inputStreamReader ->
+            val decodedConfig = Gson().fromJson(inputStreamReader,Map::class.java)
+            return Simulation.createFromConfiguration(configuration = decodedConfig)
+        }
     }
 }

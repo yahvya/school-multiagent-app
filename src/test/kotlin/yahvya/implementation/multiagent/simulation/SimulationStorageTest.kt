@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import yahvya.implementation.multiagent.TestInit
 import yahvya.implementation.multiagent.environment.Environment
+import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 
 /**
@@ -37,10 +38,27 @@ class SimulationStorageTest {
         val simulation = createTestSimulation()
 
         assertDoesNotThrow{
-            val outputStream = ByteArrayOutputStream()
+            ByteArrayOutputStream().use{ outputStream ->
+                assertEquals(outputStream.size(),0)
+                assertTrue(SimulationStorage.storeIn(simulation = simulation, outputStream = outputStream))
+                assertTrue(outputStream.size() > 0)
 
-            assertEquals(outputStream.size(),0)
-            assertTrue(SimulationStorage.storeIn(simulation = simulation, outputStream = outputStream))
+                ByteArrayInputStream(outputStream.toByteArray()).use{ inputStream ->
+                    val createdSimulation = SimulationStorage.loadFrom(inputStream = inputStream)
+
+                    assertEquals(simulation.name,createdSimulation.name)
+                    assertEquals(simulation.environment.name,createdSimulation.environment.name)
+                    assertEquals(simulation.agentsInitialConfig.size,createdSimulation.agentsInitialConfig.size)
+
+                    simulation.agentsInitialConfig.forEachIndexed { key, agentInitialConfig ->
+                        val createdSimulationAgentInitialConfig = createdSimulation.agentsInitialConfig[key]
+
+                        agentInitialConfig.forEachIndexed { innerKey, behaviourClass ->
+                            assertEquals(behaviourClass.canonicalName,createdSimulationAgentInitialConfig[innerKey].canonicalName)
+                        }
+                    }
+                }
+            }
         }
     }
 }
