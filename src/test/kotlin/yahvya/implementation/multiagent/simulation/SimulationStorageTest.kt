@@ -22,7 +22,7 @@ class SimulationStorageTest {
         /**
          * @return created simulation
          */
-        fun createTestSimulation() = Simulation(
+        fun createTestSimulation() = Simulation(configuration = SimulationConfiguration(
             name = "test",
             environment = Environment(),
             agentsInitialConfig = mutableListOf(
@@ -30,7 +30,7 @@ class SimulationStorageTest {
                 listOf(TestInit.BehaviourOne::class.java),
                 listOf(),
             )
-        )
+        ))
     }
 
     @Test
@@ -46,12 +46,12 @@ class SimulationStorageTest {
                 ByteArrayInputStream(outputStream.toByteArray()).use{ inputStream ->
                     val createdSimulation = SimulationStorage.loadFrom(inputStream = inputStream)
 
-                    assertEquals(simulation.name,createdSimulation.name)
-                    assertEquals(simulation.environment.name,createdSimulation.environment.name)
-                    assertEquals(simulation.agentsInitialConfig.size,createdSimulation.agentsInitialConfig.size)
+                    assertEquals(simulation.configuration.name,createdSimulation.configuration.name)
+                    assertEquals(simulation.configuration.environment.name,createdSimulation.configuration.environment.name)
+                    assertEquals(simulation.configuration.agentsInitialConfig.size,createdSimulation.configuration.agentsInitialConfig.size)
 
-                    simulation.agentsInitialConfig.forEachIndexed { key, agentInitialConfig ->
-                        val createdSimulationAgentInitialConfig = createdSimulation.agentsInitialConfig[key]
+                    simulation.configuration.agentsInitialConfig.forEachIndexed { key, agentInitialConfig ->
+                        val createdSimulationAgentInitialConfig = createdSimulation.configuration.agentsInitialConfig[key]
 
                         agentInitialConfig.forEachIndexed { innerKey, behaviourClass ->
                             assertEquals(behaviourClass.canonicalName,createdSimulationAgentInitialConfig[innerKey].canonicalName)

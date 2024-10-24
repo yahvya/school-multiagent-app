@@ -19,15 +19,15 @@ class SimulationTest {
         /**
          * @return created empty simulation
          */
-        fun createEmptyTestSimulation() = Simulation(
+        fun createEmptyTestSimulation() = Simulation(configuration = SimulationConfiguration(
             name = "test",
             environment = Environment()
-        )
+        ))
 
         /**
          * @return created simulation
          */
-        fun createTestSimulation() = Simulation(
+        fun createTestSimulation() = Simulation(configuration = SimulationConfiguration(
             name = "test",
             environment = Environment(),
             agentsInitialConfig = mutableListOf(
@@ -35,19 +35,19 @@ class SimulationTest {
                 listOf(TestInit.BehaviourOne::class.java),
                 listOf(),
             )
-        )
+        ))
 
         /**
          * @return created simulation
          */
-        fun createTestLaunchSimulation() = Simulation(
+        fun createTestLaunchSimulation() = Simulation(configuration = SimulationConfiguration(
             name = "test",
             environment = Environment(),
             agentsInitialConfig = mutableListOf(
                 listOf(TestInit.BehaviourOne::class.java, TestInit.BehaviourTwo::class.java),
                 listOf(TestInit.BehaviourOne::class.java)
             )
-        )
+        ))
     }
 
     @Test
@@ -58,9 +58,9 @@ class SimulationTest {
             val exportedConfiguration = simulation.exportConfig()
             val createdSimulation = Simulation.createFromConfiguration(configuration = exportedConfiguration)
 
-            assertEquals(simulation.name,createdSimulation.name)
-            assertEquals(simulation.environment.name,createdSimulation.environment.name)
-            assertEquals(simulation.agentsInitialConfig.size,createdSimulation.agentsInitialConfig.size)
+            assertEquals(simulation.configuration.name,createdSimulation.configuration.name)
+            assertEquals(simulation.configuration.environment.name,createdSimulation.configuration.environment.name)
+            assertEquals(simulation.configuration.agentsInitialConfig.size,createdSimulation.configuration.agentsInitialConfig.size)
         }
     }
 
@@ -72,12 +72,12 @@ class SimulationTest {
             val exportedConfiguration = simulation.exportConfig()
             val createdSimulation = Simulation.createFromConfiguration(configuration = exportedConfiguration)
 
-            assertEquals(simulation.name,createdSimulation.name)
-            assertEquals(simulation.environment.name,createdSimulation.environment.name)
-            assertEquals(simulation.agentsInitialConfig.size,createdSimulation.agentsInitialConfig.size)
+            assertEquals(simulation.configuration.name,createdSimulation.configuration.name)
+            assertEquals(simulation.configuration.environment.name,createdSimulation.configuration.environment.name)
+            assertEquals(simulation.configuration.agentsInitialConfig.size,createdSimulation.configuration.agentsInitialConfig.size)
 
-           simulation.agentsInitialConfig.forEachIndexed { key, agentInitialConfig ->
-              val createdSimulationAgentInitialConfig = createdSimulation.agentsInitialConfig[key]
+           simulation.configuration.agentsInitialConfig.forEachIndexed { key, agentInitialConfig ->
+              val createdSimulationAgentInitialConfig = createdSimulation.configuration.agentsInitialConfig[key]
 
                agentInitialConfig.forEachIndexed { innerKey, behaviourClass ->
                    assertEquals(behaviourClass.canonicalName,createdSimulationAgentInitialConfig[innerKey].canonicalName)

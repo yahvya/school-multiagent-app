@@ -28,7 +28,7 @@ class AppAgent : Agent(), Exportable{
     /**
      * @brief remove a behaviour to the agent
      * @return this
-     * @attention call this method instead of "removebehaviour"
+     * @attention call this method instead of "removeBehaviour"
      */
     fun removeAppAgentBehaviour(behaviour: AppAgentBehaviour): AppAgent{
         this.removeBehaviour(behaviour)
@@ -40,7 +40,7 @@ class AppAgent : Agent(), Exportable{
     /**
      * @brief add a behaviour to the agent
      * @return this
-     * @attention call this method instead of "addbehaviour"
+     * @attention call this method instead of "addBehaviour"
      */
     fun addAppAgentBehaviour(behaviour: AppAgentBehaviour): AppAgent{
         this.addBehaviour(behaviour)
