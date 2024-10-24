@@ -12,7 +12,7 @@ data object PathsConfig{
     /**
      * @brief application "favicon" path
      */
-    const val APPLICATION_ICON_PATH:String = "icons/logo.png"
+    const val APPLICATION_ICON_PATH:String = "icons/icon.png"
 
     /**
      * @brief stylesheets directory path

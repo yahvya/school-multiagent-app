@@ -1,4 +1,4 @@
-package yahvya.implementation.tmp.appinterface.navigation
+package yahvya.implementation.graphical.navigation
 
 import javafx.stage.Stage
 
