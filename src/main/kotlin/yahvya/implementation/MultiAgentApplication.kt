@@ -1,7 +1,6 @@
 package yahvya.implementation
 
 import javafx.application.Application
-import javafx.application.Platform
 import javafx.stage.Stage
 import mu.KotlinLogging
 import yahvya.implementation.configurations.ApplicationConfig
@@ -20,8 +19,6 @@ open class MultiAgentApplication : Application(), InterfaceConfigurator by Defau
         }
 
         this.configureApplication(mainStage = stage)
-
-        Platform.exit()
     }
 
     /**

@@ -37,7 +37,7 @@ object TestInit {
             this.myAgent.doDelete()
         }
 
-        override fun done(): Boolean = false
+        override fun done(): Boolean = true
 
         override fun loadFromExportedConfig(configuration: Map<*, *>): Boolean = true
     }
@@ -51,7 +51,7 @@ object TestInit {
             this.myAgent.doDelete()
         }
 
-        override fun done(): Boolean = false
+        override fun done(): Boolean = true
 
         override fun loadFromExportedConfig(configuration: Map<*, *>): Boolean = true
     }

@@ -7,6 +7,8 @@ module yahvya.implementation {
     requires net.synedra.validatorfx;
     requires io.github.microutils.kotlinlogging;
     requires ch.qos.logback.core;
+    requires org.slf4j;
+    requires com.google.gson;
 
     opens yahvya.implementation.multiagent.agent;
 
