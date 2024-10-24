@@ -40,6 +40,8 @@ object TestInit {
         override fun done(): Boolean = true
 
         override fun loadFromExportedConfig(configuration: Map<*, *>): Boolean = true
+
+        override fun getToConfigure(): List<String> = listOf()
     }
 
     class BehaviourTwo : AppAgentBehaviour(){
@@ -54,6 +56,8 @@ object TestInit {
         override fun done(): Boolean = true
 
         override fun loadFromExportedConfig(configuration: Map<*, *>): Boolean = true
+
+        override fun getToConfigure(): List<String> = listOf()
     }
 
     class TestCell : EnvironmentCell{
@@ -68,6 +72,8 @@ object TestInit {
         override fun buildExportConfiguration(): Map<*, *> = mapOf<String,Any>()
 
         override fun loadFromExportedConfig(configuration: Map<*, *>): Boolean = true
+
+        override fun getToConfigure(): List<String> = listOf()
     }
 
     class TestBox : Box(){
@@ -97,6 +103,8 @@ object TestInit {
         override fun buildExportConfiguration(): Map<*, *> = mapOf<String,Any>()
 
         override fun loadFromExportedConfig(configuration: Map<*, *>): Boolean = true
+
+        override fun getToConfigure(): List<String> = listOf()
     }
 
     class CellTwo : EnvironmentCell{
@@ -111,5 +119,7 @@ object TestInit {
         override fun buildExportConfiguration(): Map<*, *> = mapOf<String,Any>()
 
         override fun loadFromExportedConfig(configuration: Map<*, *>): Boolean = true
+
+        override fun getToConfigure(): List<String> = listOf()
     }
 }

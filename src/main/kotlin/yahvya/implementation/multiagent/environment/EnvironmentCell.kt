@@ -2,17 +2,23 @@ package yahvya.implementation.multiagent.environment
 
 import yahvya.implementation.configurations.ApplicationConfig
 import yahvya.implementation.multiagent.interfaces.Box
+import yahvya.implementation.multiagent.interfaces.Configurable
 import yahvya.implementation.multiagent.interfaces.Exportable
 import yahvya.implementation.plugins.loader.PluginsLoader
 
 /**
  * @brief environment cell
  */
-abstract class EnvironmentCell: Exportable {
+abstract class EnvironmentCell: Exportable, Configurable {
     /**
      * @brief the cell box
      */
     lateinit var box: Box
+
+    /**
+     * @brief cell configuration
+     */
+    var configuration: Map<*,*> = mapOf<String,String>()
 
     companion object{
         /**
@@ -44,13 +50,15 @@ abstract class EnvironmentCell: Exportable {
             ApplicationConfig.LOGGER.info("Creating environment cell from configuration")
 
             if(!Exportable.containKeys(configuration= configuration, ExportKeys.CLASS, ExportKeys.SPECIFIC_CONFIG,
-                    ExportKeys.BOX))
+                    ExportKeys.BOX, ExportKeys.EXTERNAL_CONFIGURATION))
                 throw Exception("The provided configuration for the cell doesn't contain all expected keys")
 
             val cellClass = configuration[ExportKeys.CLASS] as String
 
             val foundedClass = this.AVAILABLE_CELLS_CLASSES.first{it.canonicalName == cellClass}
             val instance = foundedClass.getConstructor().newInstance() as EnvironmentCell
+
+            instance.configuration = configuration[ExportKeys.EXTERNAL_CONFIGURATION] as Map<*,*>
 
             // load from configuration
             instance.box = Box.createFromConfiguration(configuration = configuration[ExportKeys.BOX] as Map<*,*>)
@@ -100,8 +108,13 @@ abstract class EnvironmentCell: Exportable {
         return mapOf<String,Any>(
             ExportKeys.CLASS to this.javaClass.canonicalName,
             ExportKeys.BOX to this.box.exportConfig(),
-            ExportKeys.SPECIFIC_CONFIG to this.buildExportConfiguration()
+            ExportKeys.SPECIFIC_CONFIG to this.buildExportConfiguration(),
+            ExportKeys.EXTERNAL_CONFIGURATION to this.configuration
         )
+    }
+
+    override fun receiveConfiguration(configuration: Map<String, String>) {
+        this.configuration = configuration
     }
 
     /**
@@ -121,6 +134,11 @@ abstract class EnvironmentCell: Exportable {
         /**
          * @brief cell specific configuration
          */
-        const val SPECIFIC_CONFIG = "specificConfig"
+        const val SPECIFIC_CONFIG:String = "specificConfig"
+
+        /**
+         * @brief external configuration for configurable
+         */
+        const val EXTERNAL_CONFIGURATION:String = "externalConfiguration"
     }
 }
