@@ -4,6 +4,7 @@ import javafx.application.Application
 import javafx.stage.Stage
 import mu.KotlinLogging
 import yahvya.implementation.configurations.ApplicationConfig
+import yahvya.implementation.graphical.controllers.TestController
 import yahvya.implementation.graphical.navigation.DefaultInterfaceConfigurator
 import yahvya.implementation.graphical.navigation.InterfaceConfigurator
 import yahvya.implementation.graphical.navigation.NavigationManager
@@ -19,6 +20,8 @@ open class MultiAgentApplication : Application(), InterfaceConfigurator by Defau
         }
 
         this.configureApplication(mainStage = stage)
+
+        ApplicationConfig.NAVIGATION_MANAGER.switchOnController(fxmlPath = TestController.getFxmlPath())
     }
 
     /**

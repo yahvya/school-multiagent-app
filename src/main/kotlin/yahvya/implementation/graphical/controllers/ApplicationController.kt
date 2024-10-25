@@ -24,6 +24,8 @@ abstract class ApplicationController : AController {
         this.performActions()
     }
 
+    override fun getStylesheets(): List<String> = listOf()
+
     override fun afterLoadingScene() {}
 
     /**

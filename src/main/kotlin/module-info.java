@@ -11,6 +11,7 @@ module yahvya.implementation {
     requires com.google.gson;
     requires jade;
 
+    opens yahvya.implementation.graphical.controllers to javafx.fxml;
     opens yahvya.implementation.multiagent.agent;
 
     exports yahvya.implementation;

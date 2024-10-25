@@ -14,27 +14,40 @@ class DefaultInterfaceConfigurator : InterfaceConfigurator {
 
         // set the icon
         try{
-            stage.icons.clear()
-            stage.icons.add(Image(javaClass.getResourceAsStream(PathsConfig.APPLICATION_ICON_PATH)))
-
-            ApplicationConfig.LOGGER.info("Loading application icon succeed")
+            if(stage.icons.size == 0){
+                stage.icons.add(Image(ApplicationConfig.ROOT_CLASS.getResourceAsStream(PathsConfig.APPLICATION_ICON_PATH)))
+                ApplicationConfig.LOGGER.info("Loading application icon succeed")
+            }
         }
         catch(_: Exception){
             ApplicationConfig.LOGGER.error("Fail to load application icon")
         }
+    }
 
-        // add global stylesheet
+    override fun addGlobalStylesheets(stage: Stage) {
         try{
-            val globalStylesheetPath = javaClass.getResource("${PathsConfig.STYLESHEETS_DIRECTORY_PATH}/app.css")?.toExternalForm()
-
-            if(globalStylesheetPath === null)
-                throw Exception()
-
-            if(!stage.scene.stylesheets.contains(element = globalStylesheetPath))
-                stage.scene.stylesheets.add(element = globalStylesheetPath)
+            this.getGlobalStylesheets().forEach{stylesheetPath ->
+                if(!stage.scene.stylesheets.contains(element = stylesheetPath))
+                    stage.scene.stylesheets.add(element = stylesheetPath)
+            }
         }
-        catch(_: Exception){
-            ApplicationConfig.LOGGER.error("Fail to load global stylesheet")
+        catch(e: Exception){
+            ApplicationConfig.LOGGER.error("Fail to load one global stylesheet due to ${e.message}")
+        }
+    }
+
+    override fun getGlobalStylesheets(): List<String> {
+        try{
+            val globalStylesheets = arrayOf("app.css")
+
+            return globalStylesheets.mapNotNull { stylesheetPathFormBaseDir ->
+                ApplicationConfig.ROOT_CLASS.getResource("${PathsConfig.STYLESHEETS_DIRECTORY_PATH}/$stylesheetPathFormBaseDir")
+                    ?.toExternalForm()
+            }
+        }
+        catch(e: Exception){
+            ApplicationConfig.LOGGER.error("Fail to load any stylesheet due to ${e.message}")
+            return listOf()
         }
     }
 }

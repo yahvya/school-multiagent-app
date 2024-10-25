@@ -29,4 +29,10 @@ interface AController {
      * @throws Nothing
      */
     fun showAfter(): Boolean
+
+    /**
+     * @return the list of stylesheets to load for this controller
+     * @throws Nothing
+     */
+    fun getStylesheets():List<String>
 }
