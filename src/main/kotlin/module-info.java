@@ -9,6 +9,7 @@ module yahvya.implementation {
     requires ch.qos.logback.core;
     requires org.slf4j;
     requires com.google.gson;
+    requires jade;
 
     opens yahvya.implementation.multiagent.agent;
 

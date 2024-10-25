@@ -1,9 +1,9 @@
 package yahvya.implementation.multiagent.environment
 
 import yahvya.implementation.configurations.ApplicationConfig
-import yahvya.implementation.multiagent.interfaces.Box
-import yahvya.implementation.multiagent.interfaces.Configurable
-import yahvya.implementation.multiagent.interfaces.Exportable
+import yahvya.implementation.multiagent.definitions.Box
+import yahvya.implementation.multiagent.definitions.Configurable
+import yahvya.implementation.multiagent.definitions.Exportable
 import yahvya.implementation.plugins.loader.PluginsLoader
 
 /**

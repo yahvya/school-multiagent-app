@@ -50,11 +50,11 @@ open class NavigationManager(
 
             // load and call controller configuration methods
 
-            val sceneController: AController = sceneDatas.fxmlLoader.getController<AController>()
+            val sceneController: AController = sceneDatas.fxmlLoader.getController()
             sceneController.receiveDatas(datas= datas, navigationManager= this)
 
             if(sceneController.storeCurrentVersionOnSwitch())
-                this.pagesStore.put(fxmlPath, sceneDatas)
+                this.pagesStore[fxmlPath] = sceneDatas
             else
                 this.pagesStore.remove(fxmlPath)
 

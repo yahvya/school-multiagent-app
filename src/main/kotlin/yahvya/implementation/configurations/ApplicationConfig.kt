@@ -1,7 +1,6 @@
 package yahvya.implementation.configurations
 
 import javafx.application.Application
-import mu.KotlinLogging
 import yahvya.implementation.graphical.navigation.NavigationManager
 
 /**

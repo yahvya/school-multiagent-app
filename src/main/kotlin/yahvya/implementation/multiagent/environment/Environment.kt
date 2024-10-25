@@ -1,7 +1,7 @@
 package yahvya.implementation.multiagent.environment
 
 import yahvya.implementation.configurations.ApplicationConfig
-import yahvya.implementation.multiagent.interfaces.Exportable
+import yahvya.implementation.multiagent.definitions.Exportable
 
 /**
  * @brief environment configuration
@@ -36,6 +36,9 @@ open class Environment : Exportable{
         }
     }
 
+    /**
+     * @throws Nothing
+     */
     constructor()
 
     /**
@@ -61,12 +64,10 @@ open class Environment : Exportable{
         return this
     }
 
-    override fun exportConfig(): Map<*,*> {
-        return mapOf<String,Any>(
-            ExportKeys.NAME to this.name,
-            ExportKeys.CELLS to this.cells.map{ it.exportConfig() }
-        )
-    }
+    override fun exportConfig(): Map<*,*> = mapOf(
+        ExportKeys.NAME to this.name,
+        ExportKeys.CELLS to this.cells.map{ it.exportConfig() }
+    )
 
     override fun loadFromExportedConfig(configuration: Map<*, *>): Boolean {
         try{

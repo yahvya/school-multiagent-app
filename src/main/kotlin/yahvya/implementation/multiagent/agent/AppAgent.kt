@@ -2,8 +2,8 @@ package yahvya.implementation.multiagent.agent
 
 import jade.core.Agent
 import yahvya.implementation.configurations.ApplicationConfig
-import yahvya.implementation.multiagent.interfaces.Box
-import yahvya.implementation.multiagent.interfaces.Exportable
+import yahvya.implementation.multiagent.definitions.Box
+import yahvya.implementation.multiagent.definitions.Exportable
 import yahvya.implementation.multiagent.simulation.Simulation
 
 /**
@@ -90,7 +90,7 @@ class AppAgent : Agent(), Exportable{
         }
     }
 
-    override fun exportConfig(): Map<*, *> = mapOf<String,Any>(
+    override fun exportConfig(): Map<*, *> = mapOf(
         ExportKeys.BOX to this.box.exportConfig(),
         ExportKeys.BEHAVIOURS to this.behaviours.map{ it.exportConfig() }
     )

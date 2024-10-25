@@ -1,4 +1,4 @@
-package yahvya.implementation.multiagent.interfaces
+package yahvya.implementation.multiagent.definitions
 
 import yahvya.implementation.configurations.ApplicationConfig
 import yahvya.implementation.plugins.loader.PluginsLoader

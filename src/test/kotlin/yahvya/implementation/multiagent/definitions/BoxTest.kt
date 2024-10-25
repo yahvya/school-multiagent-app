@@ -1,4 +1,4 @@
-package yahvya.implementation.multiagent.interfaces
+package yahvya.implementation.multiagent.definitions
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertDoesNotThrow

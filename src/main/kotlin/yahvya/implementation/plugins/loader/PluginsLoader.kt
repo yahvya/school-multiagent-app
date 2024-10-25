@@ -62,7 +62,7 @@ object PluginsLoader {
                             .replace("/",".")
                             .replace("\\",".")
 
-                        result.add(classLoader.loadClass(formattedClasspath) as Class<PluginsType>)
+                        result.add(classLoader.loadClass(formattedClasspath) as Class<out PluginsType>)
                     }
                 }
             }

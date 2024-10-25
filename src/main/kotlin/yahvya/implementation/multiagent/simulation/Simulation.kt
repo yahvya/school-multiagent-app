@@ -9,7 +9,7 @@ import yahvya.implementation.configurations.ApplicationConfig
 import yahvya.implementation.multiagent.agent.AppAgent
 import yahvya.implementation.multiagent.agent.AppAgentBehaviour
 import yahvya.implementation.multiagent.environment.Environment
-import yahvya.implementation.multiagent.interfaces.Exportable
+import yahvya.implementation.multiagent.definitions.Exportable
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -92,7 +92,7 @@ open class Simulation(
         )
     }
 
-    override fun exportConfig(): Map<*, *> = mapOf<String,Any>(
+    override fun exportConfig(): Map<*, *> = mapOf(
         ExportKeys.NAME to this.configuration.name,
         ExportKeys.ENVIRONMENT to this.environmentConfig,
         ExportKeys.HOST to this.configuration.host,

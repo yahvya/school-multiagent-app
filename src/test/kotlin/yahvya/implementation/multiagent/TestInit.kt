@@ -4,7 +4,7 @@ import javafx.application.Application
 import yahvya.implementation.MultiAgentApplication
 import yahvya.implementation.multiagent.agent.AppAgentBehaviour
 import yahvya.implementation.multiagent.environment.EnvironmentCell
-import yahvya.implementation.multiagent.interfaces.Box
+import yahvya.implementation.multiagent.definitions.Box
 
 object TestInit {
     fun initForTest(){
