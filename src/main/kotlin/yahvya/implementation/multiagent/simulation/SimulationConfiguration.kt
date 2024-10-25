@@ -24,7 +24,7 @@ open class SimulationConfiguration(
     /**
      * @brief show jade gui
      */
-    val showGui: Boolean = false,
+    var showGui: Boolean = false,
 ) {
     /**
      * @brief host

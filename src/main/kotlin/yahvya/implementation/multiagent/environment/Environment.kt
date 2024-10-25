@@ -10,7 +10,7 @@ open class Environment : Exportable{
     /**
      * @brief environment name
      */
-    var name: String = "GOAT"
+    var name: String = ""
 
     /**
      * @brief environment cells

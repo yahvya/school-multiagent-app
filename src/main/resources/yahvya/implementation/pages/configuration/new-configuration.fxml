@@ -47,7 +47,7 @@
                            </font>
                         </Label>
                         <TextField fx:id="simulationName" alignment="CENTER" prefHeight="38.0" prefWidth="358.0" promptText="Définir un nom" />
-                        <CheckBox alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" selected="true" text="Afficher l'interface JADE">
+                        <CheckBox fx:id="showGuiState" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" selected="true" text="Afficher l'interface JADE">
                            <font>
                               <Font size="19.0" />
                            </font>

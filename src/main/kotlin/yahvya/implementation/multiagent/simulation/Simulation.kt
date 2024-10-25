@@ -97,6 +97,7 @@ open class Simulation(
         ExportKeys.ENVIRONMENT to this.environmentConfig,
         ExportKeys.HOST to this.configuration.host,
         ExportKeys.PORT to this.configuration.port,
+        ExportKeys.SHOW_GUI to this.configuration.showGui,
         ExportKeys.AGENTS_INITIAL_CONFIGURATION to this.configuration.agentsInitialConfig.map{
             listOfBehavioursClass -> listOfBehavioursClass.map{it.canonicalName}
         }
@@ -105,7 +106,7 @@ open class Simulation(
     override fun loadFromExportedConfig(configuration: Map<*, *>): Boolean {
         ApplicationConfig.LOGGER.info("Loading simulation <${this.configuration.name}> from exported configuration")
         
-        if(!Exportable.containKeys(configuration= configuration, ExportKeys.ENVIRONMENT, ExportKeys.NAME, ExportKeys.AGENTS_INITIAL_CONFIGURATION))
+        if(!Exportable.containKeys(configuration= configuration, ExportKeys.ENVIRONMENT, ExportKeys.NAME, ExportKeys.AGENTS_INITIAL_CONFIGURATION,ExportKeys.SHOW_GUI))
             return false
 
         try{
@@ -114,6 +115,7 @@ open class Simulation(
             this.configuration.environment = Environment.createFromConfiguration(configuration = configuration[ExportKeys.ENVIRONMENT] as Map<*,*>)
             this.configuration.port = configuration[ExportKeys.PORT] as String
             this.configuration.host = configuration[ExportKeys.HOST] as String
+            this.configuration.showGui = configuration[ExportKeys.SHOW_GUI] as Boolean
             this.configuration.agentsInitialConfig = agentsInitialConfigSave.map{ listOfClassCanonicalNames ->
                 (listOfClassCanonicalNames as List<*>).map{ canonicalName ->
                     AppAgentBehaviour.AVAILABLE_AGENT_BEHAVIOURS_CLASSES.first { it.canonicalName == canonicalName }
@@ -215,5 +217,10 @@ open class Simulation(
          * @brief port
          */
         const val PORT:String = "port"
+
+        /**
+         * @brief show gui
+         */
+        const val SHOW_GUI:String = "showGui"
     }
 }
