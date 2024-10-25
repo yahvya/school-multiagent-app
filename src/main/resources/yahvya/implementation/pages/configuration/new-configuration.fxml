@@ -35,18 +35,8 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <TextField alignment="CENTER" prefHeight="40.0" prefWidth="340.0" promptText="Définir un nom" />
-                        <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="390.0" text="Ajouter une cellule" />
-                     </children>
-                  </VBox>
-                  <VBox alignment="TOP_CENTER" prefWidth="268.0" spacing="30.0">
-                     <children>
-                        <Label text="AGENTS">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Label>
-                        <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="378.0" text="Ajouter un agent" />
+                        <TextField fx:id="environmentName" alignment="CENTER" prefHeight="40.0" prefWidth="340.0" promptText="Définir un nom" />
+                        <Button mnemonicParsing="false" onMouseClicked="#addEnvironmentCell" prefHeight="38.0" prefWidth="390.0" text="Ajouter une cellule" />
                      </children>
                   </VBox>
                   <VBox alignment="TOP_CENTER" prefWidth="358.0" spacing="30.0">
@@ -56,21 +46,21 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <TextField alignment="CENTER" prefHeight="38.0" prefWidth="358.0" promptText="Définir un nom" />
+                        <TextField fx:id="simulationName" alignment="CENTER" prefHeight="38.0" prefWidth="358.0" promptText="Définir un nom" />
                         <CheckBox alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" selected="true" text="Afficher l'interface JADE">
                            <font>
                               <Font size="19.0" />
                            </font>
                         </CheckBox>
-                        <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="433.0" text="Ajouter un agent" />
+                        <Button mnemonicParsing="false" onMouseClicked="#addAgent" prefHeight="38.0" prefWidth="433.0" text="Ajouter un agent" />
                      </children>
                   </VBox>
-                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="430.0" text="Télécharger la configuration">
+                  <Button mnemonicParsing="false" onMouseClicked="#downloadConfiguration" prefHeight="31.0" prefWidth="430.0" text="Télécharger la configuration">
                      <font>
                         <Font size="17.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="430.0" text="Retour à l'accueil">
+                  <Button onMouseClicked="#goBackToHome" prefHeight="31.0" prefWidth="430.0" text="Retour à l'accueil">
                      <font>
                         <Font size="17.0" />
                      </font>
@@ -114,7 +104,7 @@
                   </HBox>
                   <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                        <VBox fx:id="configurationZone" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                            <children>
                               <Label text="ZONE DE CONFIGURATION">
                                  <font>
@@ -130,6 +120,7 @@
                                     <Font size="17.0" />
                                  </font>
                               </Label>
+                              <VBox fx:id="recapZone" prefHeight="200.0" prefWidth="100.0" />
                            </children>
                         </VBox>
                      </children>

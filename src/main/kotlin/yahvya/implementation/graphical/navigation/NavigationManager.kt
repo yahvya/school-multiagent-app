@@ -37,6 +37,9 @@ open class NavigationManager(
 
         val fxmlFinalPath = if(fxmlPath.startsWith("/")) fxmlPath else "/$fxmlPath"
 
+        this.mainStage.close()
+        this.mainStage = Stage()
+
         try{
             // load the scene datas
             lateinit var sceneDatas: SceneDatas
