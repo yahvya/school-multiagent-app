@@ -32,5 +32,5 @@ abstract class ApplicationController : AController {
      * @brief called to perform action after receiving datas
      * @throws Nothing
      */
-    fun performActions(){}
+    open fun performActions(){}
 }

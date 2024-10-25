@@ -83,6 +83,7 @@ open class NavigationManager(
             // configure the interface and show the controller
 
             this.mainStage.scene = sceneDatas.loadedScene
+            this.mainStage.title = "${ApplicationConfig.APPLICATION_NAME} | ${sceneController.getPageName()}"
             this.interfaceConfigurator.addGlobalStylesheets(stage= this.mainStage)
             this.interfaceConfigurator.configureInterface(stage= this.mainStage)
 
@@ -93,8 +94,8 @@ open class NavigationManager(
 
             return true
         }
-        catch(_: Exception){
-            ApplicationConfig.LOGGER.error("Fail to switch to the controller")
+        catch(e: Exception){
+            ApplicationConfig.LOGGER.error("Fail to switch to the controller due to <${e.message}>")
             return false
         }
     }

@@ -31,6 +31,11 @@ interface AController {
     fun showAfter(): Boolean
 
     /**
+     * @return page name
+     */
+    fun getPageName(): String
+
+    /**
      * @return the list of stylesheets to load for this controller
      * @throws Nothing
      */

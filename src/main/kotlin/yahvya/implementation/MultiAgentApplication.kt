@@ -4,7 +4,7 @@ import javafx.application.Application
 import javafx.stage.Stage
 import mu.KotlinLogging
 import yahvya.implementation.configurations.ApplicationConfig
-import yahvya.implementation.graphical.controllers.TestController
+import yahvya.implementation.configurations.ScreensConfig
 import yahvya.implementation.graphical.navigation.DefaultInterfaceConfigurator
 import yahvya.implementation.graphical.navigation.InterfaceConfigurator
 import yahvya.implementation.graphical.navigation.NavigationManager
@@ -20,8 +20,7 @@ open class MultiAgentApplication : Application(), InterfaceConfigurator by Defau
         }
 
         this.configureApplication(mainStage = stage)
-
-        ApplicationConfig.NAVIGATION_MANAGER.switchOnController(fxmlPath = TestController.getFxmlPath())
+        ApplicationConfig.NAVIGATION_MANAGER.switchOnController(fxmlPath = ScreensConfig.WELCOME_SCREEN)
     }
 
     /**
@@ -31,7 +30,6 @@ open class MultiAgentApplication : Application(), InterfaceConfigurator by Defau
      * @throws Nothing
      */
     protected fun configureApplication(mainStage: Stage): MultiAgentApplication{
-        // configure application
         ApplicationConfig.init(
             rootClass = javaClass,
             navigationManager = NavigationManager(
@@ -40,6 +38,8 @@ open class MultiAgentApplication : Application(), InterfaceConfigurator by Defau
             ),
             pluginsParentDirectory = "plugins",
             logger =  KotlinLogging.logger {},
+            applicationName = "SimuGandr",
+            authorGithubLink = "https://github.com/yahvya"
         )
 
         return this

@@ -162,6 +162,15 @@ open class Simulation(
                 this.configuration.environment.update()
             }
 
+            try{
+                this.mainContainer.kill()
+            }catch(_:Exception){}
+
+            try{
+                jadeRuntime.shutDown()
+            }
+            catch(_:Exception){}
+
             this.manageEnd()
         }
         catch(e: Exception){

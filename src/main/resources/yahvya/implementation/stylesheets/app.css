@@ -1,88 +1,88 @@
 .root {
-    -fx-app-background-color: #2b2b2b;
-    -fx-control-inner-background: #323232;
-    -fx-background-light: #3c3f41;
-    -fx-accent-color: #589df6;
-    -fx-default-text-color: #a9b7c6;
-    -fx-secondary-text-color: #808080;
-    -fx-highlight-background: #214283;
-    -fx-highlight-text-color: #ffffff;
-    -fx-border-color: #606366;
-    -fx-focus-color: #6897bb;
-    -fx-hover-background: #3c3f41;
-    -fx-disabled-text-color: #606366;
-    -fx-shadow-highlight-color: #323232;
-    -fx-link-color: #589df6;
+    -fx-app-background-color: #181A20;
+    -fx-app-control-inner-background: #43434e;
+    -fx-app-background-light: #5f6280;
+    -fx-app-accent-color: #5468FF;
+    -fx-app-default-text-color: #d0d0d0;
+    -fx-app-secondary-text-color: #88828b;
+    -fx-app-highlight-background: #171926;
+    -fx-app-highlight-text-color: #ffffff;
+    -fx-app-border-color: #5f6280;
+    -fx-app-focus-color: #88828b;
+    -fx-app-hover-background: #43434e;
+    -fx-app-disabled-text-color: #5f6280;
+    -fx-app-shadow-highlight-color: #2c2d3b;
+    -fx-app-link-color: #88828b;
 
     -fx-background-color: -fx-app-background-color;
-    -fx-text-fill: -fx-default-text-color;
+    -fx-text-fill: -fx-app-default-text-color;
 }
 
 .button {
-    -fx-background-color: -fx-control-inner-background;
-    -fx-text-fill: -fx-default-text-color;
-    -fx-border-color: -fx-border-color;
+    -fx-background-color: -fx-app-control-inner-background;
+    -fx-text-fill: -fx-app-default-text-color;
+    -fx-border-color: -fx-app-border-color;
     -fx-border-width: 1;
 }
 
 .button:hover {
-    -fx-background-color: -fx-hover-background;
+    -fx-background-color: -fx-app-hover-background;
 }
 
 .label {
-    -fx-text-fill: -fx-default-text-color;
+    -fx-text-fill: -fx-app-default-text-color;
 }
 
 .text-field {
-    -fx-background-color: -fx-control-inner-background;
-    -fx-text-fill: -fx-default-text-color;
-    -fx-border-color: -fx-border-color;
-    -fx-highlight-text-fill: -fx-highlight-text-color;
-    -fx-highlight-fill: -fx-highlight-background;
+    -fx-background-color: -fx-app-control-inner-background;
+    -fx-text-fill: -fx-app-default-text-color;
+    -fx-border-color: -fx-app-border-color;
+    -fx-highlight-text-fill: -fx-app-highlight-text-color;
+    -fx-highlight-fill: -fx-app-highlight-background;
 }
 
 .text-area {
-    -fx-background-color: -fx-control-inner-background;
-    -fx-text-fill: -fx-default-text-color;
-    -fx-border-color: -fx-border-color;
+    -fx-background-color: -fx-app-control-inner-background;
+    -fx-text-fill: -fx-app-default-text-color;
+    -fx-border-color: -fx-app-border-color;
 }
 
 .list-view {
-    -fx-background-color: -fx-control-inner-background;
-    -fx-border-color: -fx-border-color;
+    -fx-background-color: -fx-app-control-inner-background;
+    -fx-border-color: -fx-app-border-color;
 }
 
 .list-cell {
-    -fx-text-fill: -fx-default-text-color;
+    -fx-text-fill: -fx-app-default-text-color;
 }
 
 .tab-pane .tab-header-area {
-    -fx-background-color: -fx-background-light;
+    -fx-background-color: -fx-app-background-light;
 }
 
 .tab-pane .tab {
-    -fx-background-color: -fx-control-inner-background;
-    -fx-text-fill: -fx-default-text-color;
+    -fx-background-color: -fx-app-control-inner-background;
+    -fx-text-fill: -fx-app-default-text-color;
 }
 
 .scroll-bar {
-    -fx-background-color: -fx-control-inner-background;
+    -fx-background-color: -fx-app-control-inner-background;
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: -fx-accent-color;
+    -fx-background-color: -fx-app-accent-color;
 }
 
 .menu-bar {
-    -fx-background-color: -fx-background-light;
+    -fx-background-color: -fx-app-background-light;
 }
 
 .context-menu {
-    -fx-background-color: -fx-background-light;
+    -fx-background-color: -fx-app-background-light;
 }
 
 .tooltip {
-    -fx-background-color: -fx-background-light;
-    -fx-text-fill: -fx-default-text-color;
-    -fx-border-color: -fx-border-color;
+    -fx-background-color: -fx-app-background-light;
+    -fx-text-fill: -fx-app-default-text-color;
+    -fx-border-color: -fx-app-border-color;
 }

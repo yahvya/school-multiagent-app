@@ -40,6 +40,8 @@ open class MultiAgentApplication : Application(), InterfaceConfigurator by Defau
             ),
             pluginsParentDirectory = "plugins",
             logger =  KotlinLogging.logger {},
+            applicationName = "SimuGandr",
+            authorGithubLink = "https://github.com/yahvya"
         )
 
         return this
