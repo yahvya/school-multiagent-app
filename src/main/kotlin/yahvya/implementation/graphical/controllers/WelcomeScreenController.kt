@@ -4,6 +4,7 @@ import javafx.fxml.FXML
 import javafx.scene.input.MouseEvent
 import javafx.stage.StageStyle
 import yahvya.implementation.configurations.ApplicationConfig
+import yahvya.implementation.configurations.ScreensConfig
 import java.awt.Desktop
 import java.net.URI
 
@@ -26,7 +27,7 @@ class WelcomeScreenController : ApplicationController() {
 
     @FXML
     fun createNewConfiguration(event: MouseEvent) {
-
+        this.navigationManager.switchOnController(fxmlPath = ScreensConfig.NEW_CONFIGURATION_SCREEN)
     }
 
     @FXML

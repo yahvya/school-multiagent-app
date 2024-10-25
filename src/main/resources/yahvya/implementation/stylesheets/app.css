@@ -39,6 +39,8 @@
     -fx-border-color: -fx-app-border-color;
     -fx-highlight-text-fill: -fx-app-highlight-text-color;
     -fx-highlight-fill: -fx-app-highlight-background;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
 }
 
 .text-area {

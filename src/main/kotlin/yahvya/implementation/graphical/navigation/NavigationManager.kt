@@ -1,5 +1,6 @@
 package yahvya.implementation.graphical.navigation
 
+import javafx.application.Platform
 import javafx.fxml.FXMLLoader
 import javafx.scene.Scene
 import javafx.stage.Stage
@@ -98,6 +99,14 @@ open class NavigationManager(
             ApplicationConfig.LOGGER.error("Fail to switch to the controller due to <${e.message}>")
             return false
         }
+    }
+
+    /**
+     * @brief perform an action on the stage
+     * @param action the action
+     */
+    fun performStageAction(action: () -> Unit){
+        Platform.runLater(action)
     }
 
     /**
