@@ -89,6 +89,11 @@ open class NewConfigurationScreenController : ApplicationController(){
             simulationConfiguration.environment.cells.forEach { cell ->
                 addCellConfiguration(cellConfig= cell.exportConfig(), countOfCellsToCreate = 1)
             }
+
+            simulationConfiguration.environment.cells.clear()
+
+            // show existing agents
+            simulationConfiguration.agentsInitialConfig.clear()
         }
     }
 
@@ -246,6 +251,7 @@ open class NewConfigurationScreenController : ApplicationController(){
 
             this.simulationConfiguration.environment.apply {
                 name = environmentNameField.text
+                // create cells with the defined count of times
                 environmentCells.forEach{ environmentCellConfig ->
                     repeat(environmentCellConfig.countOfCellsToCreate) {
                         cells.add(EnvironmentCell.createFromConfiguration(configuration = environmentCellConfig.cellConfiguration))
