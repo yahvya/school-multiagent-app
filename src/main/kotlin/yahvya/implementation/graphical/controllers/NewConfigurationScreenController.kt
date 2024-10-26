@@ -20,10 +20,16 @@ import java.io.FileOutputStream
  */
 open class NewConfigurationScreenController : ApplicationController(){
     @FXML
-    private lateinit var environmentName: TextField
+    private lateinit var environmentNameField: TextField
 
     @FXML
-    private lateinit var simulationName: TextField
+    private lateinit var simulationNameField: TextField
+
+    @FXML
+    private lateinit var jadeHostField: TextField
+
+    @FXML
+    private lateinit var jadePortField: TextField
 
     @FXML
     private lateinit var configurationZone: VBox
@@ -70,9 +76,19 @@ open class NewConfigurationScreenController : ApplicationController(){
      */
     protected fun buildInterfaceFromSimulationConfig(){
         this.apply {
-            environmentName.text = simulationConfiguration.environment.name
-            simulationName.text = simulationConfiguration.name
+            environmentNameField.text = simulationConfiguration.environment.name
+            simulationNameField.text = simulationConfiguration.name
             showGuiState.isSelected = simulationConfiguration.showGui
+            jadeHostField.text = simulationConfiguration.host
+            jadePortField.text = simulationConfiguration.port
+
+            // show existing cells
+            simulationConfiguration.environment.cells.forEach { cell ->
+                environmentCells.add(CellConfig(
+                    cellConfiguration = cell.exportConfig(),
+                    countOfCellsToCreate = 1
+                ))
+            }
         }
     }
 
@@ -155,13 +171,23 @@ open class NewConfigurationScreenController : ApplicationController(){
     @FXML
     fun downloadConfiguration() {
         // verify configuration validity
-        if(this.environmentName.text.isEmpty()){
+        if(this.environmentNameField.text.isEmpty()){
             this.showErrorMessage(errorMessage = "Veuillez donner un nom à l'environnement")
             return
         }
 
-        if(this.simulationName.text.isEmpty()){
+        if(this.simulationNameField.text.isEmpty()){
             this.showErrorMessage(errorMessage = "Veuillez donner un nom à la simulation")
+            return
+        }
+
+        if(this.jadeHostField.text.isEmpty()){
+            this.showErrorMessage(errorMessage = "Veuillez définir l'hôte de lancement jade")
+            return
+        }
+
+        if(this.jadePortField.text.isEmpty()){
+            this.showErrorMessage(errorMessage = "Veuillez définir le port de lancement jade")
             return
         }
 
@@ -179,12 +205,14 @@ open class NewConfigurationScreenController : ApplicationController(){
             // save configuration in instance
 
             this.simulationConfiguration.apply{
-                name = simulationName.text
+                name = simulationNameField.text
                 showGui = showGuiState.isSelected
+                host = jadeHostField.text
+                port = jadePortField.text
             }
 
             this.simulationConfiguration.environment.apply {
-                name = environmentName.text
+                name = environmentNameField.text
 
                 environmentCells.forEach{ environmentCellConfig ->
                     repeat(environmentCellConfig.countOfCellsToCreate,{

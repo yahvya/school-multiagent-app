@@ -26,10 +26,6 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <FontAwesomeIconView fx:id="openAuthorGithubIcon" fill="#5468ff" glyphName="EXTERNAL_LINK" layoutX="564.0" layoutY="381.0" onMouseClicked="#openAuthorGithub" size="18" text="">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor></FontAwesomeIconView>
       <Button layoutX="203.0" layoutY="242.0" mnemonicParsing="false" onMouseClicked="#loadConfiguration" prefHeight="39.0" prefWidth="193.0" text="Charger une configuration">
          <font>
             <Font size="13.0" />
@@ -44,5 +40,15 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></FontAwesomeIconView>
+      <FontAwesomeIconView fill="#5468ff" glyphName="EXTERNAL_LINK" layoutX="564.0" layoutY="381.0" onMouseClicked="#openAuthorGithub" size="18" text="">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </FontAwesomeIconView>
+      <FontAwesomeIconView accessibleText="Charger un plugin" fill="#5468ff" glyphName="UPLOAD" layoutX="534.0" layoutY="381.0" onMouseClicked="#addPlugin" size="18">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </FontAwesomeIconView>
    </children>
 </AnchorPane>

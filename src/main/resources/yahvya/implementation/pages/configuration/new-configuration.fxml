@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="880.0" prefWidth="1028.0" stylesheets="@../../stylesheets/app.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="yahvya.implementation.graphical.controllers.NewConfigurationScreenController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="1037.0" prefWidth="1028.0" stylesheets="@../../stylesheets/app.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="yahvya.implementation.graphical.controllers.NewConfigurationScreenController">
    <children>
       <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="880.0" prefWidth="435.0" style="-fx-border-color: transparent -fx-app-accent-color transparent transparent; -fx-background-color: -fx-app-background-color;">
          <content>
@@ -28,6 +28,11 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
+                  <Button onMouseClicked="#goBackToHome" prefHeight="39.0" prefWidth="443.0" text="Retour à l'accueil">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Button>
                   <VBox alignment="TOP_CENTER" prefWidth="268.0" spacing="30.0">
                      <children>
                         <Label text="ENVIRONNEMENT">
@@ -35,8 +40,8 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="environmentName" alignment="CENTER" prefHeight="40.0" prefWidth="340.0" promptText="Définir un nom" />
-                        <Button mnemonicParsing="false" onMouseClicked="#addEnvironmentCell" prefHeight="38.0" prefWidth="390.0" text="Ajouter une cellule" />
+                        <TextField fx:id="environmentNameField" alignment="CENTER" prefHeight="40.0" prefWidth="340.0" promptText="Définir un nom" />
+                        <Button mnemonicParsing="false" onMouseClicked="#addEnvironmentCell" prefHeight="38.0" prefWidth="218.0" text="Ajouter une cellule" />
                      </children>
                   </VBox>
                   <VBox alignment="TOP_CENTER" prefWidth="358.0" spacing="30.0">
@@ -46,21 +51,18 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="simulationName" alignment="CENTER" prefHeight="38.0" prefWidth="358.0" promptText="Définir un nom" />
+                        <TextField fx:id="simulationNameField" alignment="CENTER" prefHeight="38.0" prefWidth="358.0" promptText="Définir un nom" />
+                        <TextField fx:id="jadeHostField" alignment="CENTER" prefHeight="38.0" prefWidth="400.0" promptText="Hôte de lancement JADE" />
+                        <TextField fx:id="jadePortField" alignment="CENTER" prefHeight="38.0" prefWidth="400.0" promptText="Port de lancement JADE" />
                         <CheckBox fx:id="showGuiState" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="38.0" prefWidth="435.0" selected="true" text="Afficher l'interface JADE">
                            <font>
                               <Font size="19.0" />
                            </font>
                         </CheckBox>
-                        <Button mnemonicParsing="false" onMouseClicked="#addAgent" prefHeight="38.0" prefWidth="433.0" text="Ajouter un agent" />
+                        <Button mnemonicParsing="false" onMouseClicked="#addAgent" prefHeight="38.0" prefWidth="218.0" text="Ajouter un agent" />
                      </children>
                   </VBox>
-                  <Button mnemonicParsing="false" onMouseClicked="#downloadConfiguration" prefHeight="31.0" prefWidth="430.0" text="Télécharger la configuration">
-                     <font>
-                        <Font size="17.0" />
-                     </font>
-                  </Button>
-                  <Button onMouseClicked="#goBackToHome" prefHeight="31.0" prefWidth="430.0" text="Retour à l'accueil">
+                  <Button mnemonicParsing="false" onMouseClicked="#downloadConfiguration" prefHeight="31.0" prefWidth="300.0" text="Télécharger la configuration">
                      <font>
                         <Font size="17.0" />
                      </font>
