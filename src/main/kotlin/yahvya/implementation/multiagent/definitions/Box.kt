@@ -1,13 +1,18 @@
 package yahvya.implementation.multiagent.definitions
 
 import yahvya.implementation.configurations.ApplicationConfig
-import yahvya.implementation.plugins.loader.PluginsLoader
+import yahvya.implementation.pluginsmanager.loader.PluginsLoader
 import kotlin.collections.get
 
 /**
  * @brief box
  */
-abstract class Box : Exportable{
+abstract class Box : Exportable,Configurable{
+    /**
+     * @brief box configuration
+     */
+    var configuration: Map<*,*> = mapOf<String,String>()
+
     companion object{
         /**
          * @brief available box classes from plugins
@@ -37,12 +42,14 @@ abstract class Box : Exportable{
         fun createFromConfiguration(configuration: Map<*,*>): Box{
             ApplicationConfig.LOGGER.info("Creating box from configuration")
 
-            if(!Exportable.containKeys(configuration= configuration, ExportKeys.CLASS, ExportKeys.SPECIFIC_CONFIGURATION))
+            if(!Exportable.containKeys(configuration= configuration, ExportKeys.CLASS, ExportKeys.SPECIFIC_CONFIGURATION,ExportKeys.EXTERNAL_CONFIGURATION))
                 throw Exception("The provided configuration for the box doesn't contain all expected keys")
 
             val boxClass = configuration[ExportKeys.CLASS] as String
             val foundedClass = this.AVAILABLE_BOX_CLASSES.first{it.canonicalName == boxClass}
             val instance = foundedClass.getConstructor().newInstance() as Box
+
+            instance.configuration = configuration[ExportKeys.EXTERNAL_CONFIGURATION] as Map<*,*>
 
             // load from configuration
             if(!instance.loadFromExportedConfig(configuration = configuration[ExportKeys.SPECIFIC_CONFIGURATION] as Map<*,*>))
@@ -64,6 +71,11 @@ abstract class Box : Exportable{
     abstract fun collideWith(x: Double, y: Double): Boolean
 
     /**
+     * @return box display name
+     */
+    abstract fun getDisplayName(): String
+
+    /**
      * @brief build the specific box configuration
      * @return the configuration
      */
@@ -72,8 +84,13 @@ abstract class Box : Exportable{
     override fun exportConfig(): Map<*, *> {
         return mapOf<String,Any>(
             ExportKeys.CLASS to this.javaClass.canonicalName,
-            ExportKeys.SPECIFIC_CONFIGURATION to this.buildExportConfiguration()
+            ExportKeys.SPECIFIC_CONFIGURATION to this.buildExportConfiguration(),
+            ExportKeys.EXTERNAL_CONFIGURATION to this.configuration
         )
+    }
+
+    override fun receiveConfiguration(configuration: Map<String, String>) {
+        this.configuration = configuration
     }
 
     /**
@@ -89,5 +106,10 @@ abstract class Box : Exportable{
          * @brief specific configuration
          */
         const val SPECIFIC_CONFIGURATION = "specificConfiguration"
+
+        /**
+         * @brief external configuration for configurable
+         */
+        const val EXTERNAL_CONFIGURATION:String = "externalConfiguration"
     }
 }

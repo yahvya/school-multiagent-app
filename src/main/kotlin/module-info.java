@@ -16,8 +16,10 @@ module yahvya.implementation {
     requires de.jensd.fx.glyphs.commons;
     requires java.desktop;
 
-    opens yahvya.implementation.multiagent.agent;
     opens yahvya.implementation.graphical.controllers to javafx.fxml;
 
+    exports yahvya.implementation.multiagent.environment;
+    exports yahvya.implementation.multiagent.definitions;
+    exports yahvya.implementation.multiagent.agent;
     exports yahvya.implementation;
 }

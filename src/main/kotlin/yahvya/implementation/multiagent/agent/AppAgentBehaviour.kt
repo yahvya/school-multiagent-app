@@ -4,7 +4,7 @@ import jade.core.behaviours.Behaviour
 import yahvya.implementation.configurations.ApplicationConfig
 import yahvya.implementation.multiagent.definitions.Configurable
 import yahvya.implementation.multiagent.definitions.Exportable
-import yahvya.implementation.plugins.loader.PluginsLoader
+import yahvya.implementation.pluginsmanager.loader.PluginsLoader
 
 /**
  * @brief application agent behaviour

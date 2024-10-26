@@ -80,6 +80,8 @@ object TestInit {
         lateinit var name: String
 
         override fun collideWith(x: Double, y: Double): Boolean = true
+        
+        override fun getDisplayName(): String = "test"
 
         override fun buildExportConfiguration(): Map<*, *> = mapOf<String,Any>(
             "name" to this.name
@@ -89,6 +91,8 @@ object TestInit {
             this.name = configuration["name"] as String
             return true
         }
+
+        override fun getToConfigure(): List<String> = listOf()
     }
 
     class CellOne : EnvironmentCell{

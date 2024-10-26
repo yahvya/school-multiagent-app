@@ -39,12 +39,12 @@ open class SimulationConfiguration(
     /**
      * @brief function to call of the end
      */
-    var toDoOnEnd: ((Simulation) -> Unit)? = null
+    var toDoOnEnd: ((simulation: Simulation) -> Unit)? = null
 
     /**
      * @brief method to draw an agent
      */
-    var drawAgent: ((AppAgent) -> Unit)? = null
+    var drawAgent: ((agent: AppAgent) -> Unit)? = null
 
     /**
      * @return the port to use

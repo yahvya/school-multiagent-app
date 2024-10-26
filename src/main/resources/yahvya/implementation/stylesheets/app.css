@@ -33,7 +33,9 @@
     -fx-text-fill: -fx-app-default-text-color;
 }
 
-.text-field {
+.text-field,
+.choice-box,
+.check-box{
     -fx-background-color: -fx-app-control-inner-background;
     -fx-text-fill: -fx-app-default-text-color;
     -fx-border-color: -fx-app-border-color;

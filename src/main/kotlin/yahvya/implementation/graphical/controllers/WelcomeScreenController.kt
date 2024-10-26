@@ -2,7 +2,6 @@ package yahvya.implementation.graphical.controllers
 
 import javafx.fxml.FXML
 import javafx.scene.control.Alert
-import javafx.scene.input.MouseEvent
 import javafx.stage.FileChooser
 import javafx.stage.StageStyle
 import yahvya.implementation.configurations.ApplicationConfig
@@ -37,16 +36,16 @@ open class WelcomeScreenController : ApplicationController() {
     }
 
     @FXML
-    fun createNewConfiguration(event: MouseEvent) {
+    fun createNewConfiguration() {
         this.navigationManager.switchOnController(fxmlPath = ScreensConfig.NEW_CONFIGURATION_SCREEN)
     }
 
     @FXML
-    fun loadConfiguration(event: MouseEvent) {
+    fun loadConfiguration() {
         val fileChooser = FileChooser()
 
         fileChooser.title = "Choisir le fichier de configuration"
-        fileChooser.extensionFilters.add(FileChooser.ExtensionFilter("Simulation",WelcomeScreenController.CONFIGURATION_FILE_EXTENSION))
+        fileChooser.extensionFilters.add(FileChooser.ExtensionFilter("Simulation",CONFIGURATION_FILE_EXTENSION))
 
         val chosenFile = fileChooser.showOpenDialog(this.navigationManager.mainStage)
 
@@ -76,7 +75,7 @@ open class WelcomeScreenController : ApplicationController() {
     }
 
     @FXML
-    fun openAuthorGithub(event: MouseEvent) {
+    fun openAuthorGithub() {
         try{
             ApplicationConfig.LOGGER.info("Opening author link")
             Desktop.getDesktop().browse(URI(ApplicationConfig.AUTHOR_GITHUB_LINK))
@@ -87,7 +86,7 @@ open class WelcomeScreenController : ApplicationController() {
     }
 
     @FXML
-    fun closeApplication(event: MouseEvent?) {
+    fun closeApplication() {
         this.navigationManager.mainStage.close()
     }
 }

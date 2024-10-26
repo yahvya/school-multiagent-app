@@ -1,4 +1,4 @@
-package yahvya.implementation.plugins.loader
+package yahvya.implementation.pluginsmanager.loader
 
 import yahvya.implementation.configurations.ApplicationConfig
 import yahvya.implementation.configurations.PathsConfig
@@ -52,7 +52,7 @@ object PluginsLoader {
                     while (true) {
                         val entry = inputStream.nextJarEntry ?: break
 
-                        if(!entry.name.matches(Regex(".*${ApplicationConfig.PLUGINS_PARENT_DIRECTORY}.*\\.class")))
+                        if(!entry.name.matches(Regex(".*/${ApplicationConfig.PLUGINS_PARENT_DIRECTORY}/.*\\.class")))
                             continue
 
                         // format file path to package format
@@ -62,7 +62,12 @@ object PluginsLoader {
                             .replace("/",".")
                             .replace("\\",".")
 
-                        result.add(classLoader.loadClass(formattedClasspath) as Class<out PluginsType>)
+                        val loadedClass = classLoader.loadClass(formattedClasspath)
+
+                        if(!PluginsType::class.java.isAssignableFrom(loadedClass))
+                            continue
+
+                        result.add(loadedClass as Class<out PluginsType>)
                     }
                 }
             }

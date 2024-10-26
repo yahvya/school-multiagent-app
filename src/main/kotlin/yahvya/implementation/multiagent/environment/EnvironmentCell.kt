@@ -4,7 +4,7 @@ import yahvya.implementation.configurations.ApplicationConfig
 import yahvya.implementation.multiagent.definitions.Box
 import yahvya.implementation.multiagent.definitions.Configurable
 import yahvya.implementation.multiagent.definitions.Exportable
-import yahvya.implementation.plugins.loader.PluginsLoader
+import yahvya.implementation.pluginsmanager.loader.PluginsLoader
 
 /**
  * @brief environment cell
