@@ -1,7 +1,10 @@
 package yahvya.implementation.graphical.controllers
 
 import javafx.fxml.FXML
+import javafx.geometry.Pos
+import javafx.scene.Cursor
 import javafx.scene.control.*
+import javafx.scene.layout.HBox
 import javafx.scene.layout.VBox
 import javafx.stage.FileChooser
 import javafx.stage.StageStyle
@@ -84,12 +87,47 @@ open class NewConfigurationScreenController : ApplicationController(){
 
             // show existing cells
             simulationConfiguration.environment.cells.forEach { cell ->
-                environmentCells.add(CellConfig(
-                    cellConfiguration = cell.exportConfig(),
-                    countOfCellsToCreate = 1
-                ))
+                addCellConfiguration(cellConfig= cell.exportConfig(), countOfCellsToCreate = 1)
             }
         }
+    }
+
+    /**
+     * @brief add a cell
+     * @param cellConfig
+     * @param countOfCellsToCreate count of cells to create
+     */
+    protected fun addCellConfiguration(cellConfig: Map<*,*>,countOfCellsToCreate: Int){
+        val cellConvertedConfig = CellConfig(
+            cellConfiguration = cellConfig,
+            countOfCellsToCreate = countOfCellsToCreate
+        )
+        this.environmentCells.add(cellConvertedConfig)
+
+        val recap = VBox()
+
+        recap.spacing = 10.0
+        recap.children.addAll(
+            Label("Element d'environnement"),
+            Label("* $countOfCellsToCreate"),
+            HBox().apply {
+                spacing = 10.0
+                alignment = Pos.CENTER_LEFT
+
+                children.addAll(
+                    Label(cellConfig[EnvironmentCell.ExportKeys.CLASS] as String),
+                    Button("Supprimer").apply {
+                        cursor = Cursor.HAND
+                        setOnMouseClicked {
+                            environmentCells.remove(cellConvertedConfig)
+                            recapZone.children.remove(recap)
+                        }
+                    }
+                )
+            }
+        )
+
+        this.recapZone.children.add(recap)
     }
 
     /**
@@ -131,12 +169,7 @@ open class NewConfigurationScreenController : ApplicationController(){
         cellInstance.receiveConfiguration(configuration = cellConfiguration)
         cellInstance.box = boxInstance
 
-        val cellConfig = CellConfig(
-            cellConfiguration = cellInstance.exportConfig(),
-            countOfCellsToCreate= countOfCellToCreate
-        )
-
-        this.environmentCells.add(cellConfig)
+        this.addCellConfiguration(cellConfig = cellInstance.exportConfig(), countOfCellsToCreate = countOfCellToCreate)
     }
 
     @FXML
@@ -213,12 +246,16 @@ open class NewConfigurationScreenController : ApplicationController(){
 
             this.simulationConfiguration.environment.apply {
                 name = environmentNameField.text
-
                 environmentCells.forEach{ environmentCellConfig ->
-                    repeat(environmentCellConfig.countOfCellsToCreate,{
+                    repeat(environmentCellConfig.countOfCellsToCreate) {
                         cells.add(EnvironmentCell.createFromConfiguration(configuration = environmentCellConfig.cellConfiguration))
-                    })
+                    }
                 }
+            }
+
+            if(chosenFile.exists()){
+                chosenFile.delete()
+                chosenFile.createNewFile()
             }
 
             FileOutputStream(chosenFile).use{ outputStream ->
@@ -227,6 +264,15 @@ open class NewConfigurationScreenController : ApplicationController(){
                     outputStream = outputStream
                 ))
                     this.showErrorMessage(errorMessage = "Une erreur s'est produite lors du téléchargement de la configuration")
+
+                Alert(Alert.AlertType.INFORMATION).apply{
+                    title = "Téléchargement"
+                    headerText = "Téléchargement réussie"
+                    contentText = "Le téléchargement de la configuration à bien été fait. Les groupes de cellules créé en nombres, seront considérés singulièrement."
+                    dialogPane.minHeight = 210.0
+
+                    show()
+                }
             }
         }
         catch(e:Exception){

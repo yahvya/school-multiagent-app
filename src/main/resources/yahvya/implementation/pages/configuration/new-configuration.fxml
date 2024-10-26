@@ -28,10 +28,16 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Button onMouseClicked="#goBackToHome" prefHeight="39.0" prefWidth="443.0" text="Retour à l'accueil">
+                  <Button onMouseClicked="#goBackToHome" prefHeight="39.0" prefWidth="443.0" text="   Retour à l'accueil">
                      <font>
                         <Font size="17.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <graphic>
+                        <FontAwesomeIconView fill="#5468ff" glyphName="HOME" size="20" />
+                     </graphic>
                   </Button>
                   <VBox alignment="TOP_CENTER" prefWidth="268.0" spacing="30.0">
                      <children>
@@ -41,7 +47,10 @@
                            </font>
                         </Label>
                         <TextField fx:id="environmentNameField" alignment="CENTER" prefHeight="40.0" prefWidth="340.0" promptText="Définir un nom" />
-                        <Button mnemonicParsing="false" onMouseClicked="#addEnvironmentCell" prefHeight="38.0" prefWidth="218.0" text="Ajouter une cellule" />
+                        <Button mnemonicParsing="false" onMouseClicked="#addEnvironmentCell" prefHeight="38.0" prefWidth="218.0" text="Ajouter une cellule">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Button>
                      </children>
                   </VBox>
                   <VBox alignment="TOP_CENTER" prefWidth="358.0" spacing="30.0">
@@ -59,13 +68,19 @@
                               <Font size="19.0" />
                            </font>
                         </CheckBox>
-                        <Button mnemonicParsing="false" onMouseClicked="#addAgent" prefHeight="38.0" prefWidth="218.0" text="Ajouter un agent" />
+                        <Button mnemonicParsing="false" onMouseClicked="#addAgent" prefHeight="38.0" prefWidth="218.0" text="Ajouter un agent">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Button>
                      </children>
                   </VBox>
                   <Button mnemonicParsing="false" onMouseClicked="#downloadConfiguration" prefHeight="31.0" prefWidth="300.0" text="Télécharger la configuration">
                      <font>
                         <Font size="17.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                </children>
                <padding>
@@ -104,9 +119,9 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="50.0" style="-fx-background-color: -fx-app-background-color;" VBox.vgrow="ALWAYS">
                      <children>
-                        <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: -fx-app-background-color;" HBox.hgrow="ALWAYS">
+                        <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: -fx-app-background-color; -fx-border-color: -fx-app-background-color;" HBox.hgrow="ALWAYS">
                            <content>
                               <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="30.0" style="-fx-background-color: -fx-app-background-color;">
                                  <children>
@@ -120,7 +135,7 @@
                               </VBox>
                            </content>
                         </ScrollPane>
-                        <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="678.0" prefWidth="114.0" style="-fx-background-color: -fx-app-background-color;" HBox.hgrow="ALWAYS">
+                        <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="678.0" prefWidth="114.0" style="-fx-background-color: -fx-app-background-color; -fx-border-color: -fx-app-background-color;" HBox.hgrow="ALWAYS">
                            <content>
                               <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="30.0" style="-fx-background-color: -fx-app-background-color;">
                                  <children>

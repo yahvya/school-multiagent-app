@@ -119,7 +119,7 @@ open class WelcomeScreenController : ApplicationController() {
 
                     ApplicationConfig.LOGGER.info("Plugin added")
 
-                    Alert(Alert.AlertType.CONFIRMATION).apply {
+                    Alert(Alert.AlertType.INFORMATION).apply {
                         title = "Confirmation"
                         headerText = "Le plugin a bien été ajouté"
                         contentText = "Le plugin a bien été ajouté. Pour charger les modifications, veuillez relancer l'application."
