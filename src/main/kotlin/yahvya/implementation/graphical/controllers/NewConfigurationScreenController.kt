@@ -5,6 +5,8 @@ import javafx.geometry.Pos
 import javafx.scene.Cursor
 import javafx.scene.control.*
 import javafx.scene.layout.HBox
+import javafx.scene.layout.Priority
+import javafx.scene.layout.Region
 import javafx.scene.layout.VBox
 import javafx.stage.FileChooser
 import javafx.stage.StageStyle
@@ -139,8 +141,13 @@ open class NewConfigurationScreenController : ApplicationController(){
                 spacing = 10.0
                 alignment = Pos.CENTER_LEFT
 
+                val className = cellConfig[EnvironmentCell.ExportKeys.CLASS] as String
+
                 children.addAll(
-                    Label(cellConfig[EnvironmentCell.ExportKeys.CLASS] as String),
+                    Label(className.split(".").last()),
+                    Region().apply {
+                        HBox.setHgrow(this, Priority.ALWAYS)
+                    },
                     Button("Supprimer").apply {
                         cursor = Cursor.HAND
                         setOnMouseClicked {
@@ -178,7 +185,10 @@ open class NewConfigurationScreenController : ApplicationController(){
                 alignment = Pos.CENTER_LEFT
 
                 children.addAll(
-                    Label(AppAgent::class.java.canonicalName),
+                    Label(AppAgent::class.simpleName ?: "AppAgent"),
+                    Region().apply {
+                        HBox.setHgrow(this, Priority.ALWAYS)
+                    },
                     Button("Supprimer").apply {
                         cursor = Cursor.HAND
                         setOnMouseClicked {
