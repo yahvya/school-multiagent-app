@@ -13,7 +13,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="30.0" stylesheets="@../../stylesheets/app.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="yahvya.implementation.graphical.controllers.SimulationScreenController">
    <children>
       <HBox alignment="CENTER_LEFT" fillHeight="false" prefWidth="600.0" spacing="40.0">
@@ -28,22 +27,22 @@
                <children>
                   <Button fx:id="simulationStateButton" mnemonicParsing="false" onMouseClicked="#setSimulationState" text="Lancer la simulation">
                      <cursor>
-                        <Cursor fx:constant="OPEN_HAND" />
+                        <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
                   <Button mnemonicParsing="false" onMouseClicked="#modifySimulation" text="Modifier la configuration">
                      <cursor>
-                        <Cursor fx:constant="OPEN_HAND" />
+                        <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
                   <Button mnemonicParsing="false" onMouseClicked="#backToHome" text="Accueil">
                      <cursor>
-                        <Cursor fx:constant="OPEN_HAND" />
+                        <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
                   <FontAwesomeIconView fill="#5468ff" glyphName="CLOSE" onMouseClicked="#closeApplication" size="30">
                      <cursor>
-                        <Cursor fx:constant="OPEN_HAND" />
+                        <Cursor fx:constant="HAND" />
                      </cursor>
                   </FontAwesomeIconView>
                </children>

@@ -116,9 +116,7 @@ open class NavigationManager(
      * @brief perform an action on the stage
      * @param action the action
      */
-    fun performStageAction(action: () -> Unit){
-        Platform.runLater(action)
-    }
+    fun performStageAction(action: () -> Unit) = Platform.runLater(action)
 
     /**
      * @brief scene stored datas
