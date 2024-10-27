@@ -1,0 +1,6 @@
+.recap-zone > *{
+    -fx-background-color: -fx-app-background-light;
+    -fx-padding: 4;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}

@@ -2,6 +2,8 @@ package yahvya.implementation.multiagent.simulation
 
 import yahvya.implementation.multiagent.agent.AppAgent
 import yahvya.implementation.multiagent.agent.AppAgentBehaviour
+import yahvya.implementation.multiagent.definitions.Box
+import yahvya.implementation.multiagent.definitions.Exportable
 import yahvya.implementation.multiagent.environment.Environment
 import java.net.ServerSocket
 
@@ -20,7 +22,7 @@ open class SimulationConfiguration(
     /**
      * @brief list of agents default behaviours
      */
-    var agentsInitialConfig: MutableList<List<Class<out AppAgentBehaviour>>> = mutableListOf(),
+    var agentsInitialConfig: MutableList<AgentInitialConfig> = mutableListOf(),
     /**
      * @brief show jade gui
      */
@@ -58,5 +60,61 @@ open class SimulationConfiguration(
         }
 
         return this.port
+    }
+
+    /**
+     * @brief agent initial configs
+     */
+    open class AgentInitialConfig : Exportable{
+        companion object{
+            /**
+             * @brief create an instance from configuration
+             * @param configuration configuration
+             * @return instance
+             * @throws Exception on error
+             */
+            fun createFromConfiguration(configuration: Map<*,*>):AgentInitialConfig{
+                val initialConfig = AgentInitialConfig()
+
+                if(!initialConfig.loadFromExportedConfig(configuration = configuration))
+                    throw Exception("Fail to load initial config from exported config")
+
+                return initialConfig
+            }
+        }
+
+        /**
+         * @brief agent box
+         */
+        lateinit var box:Box
+
+        /**
+         * @brief agent default behaviours
+         */
+        lateinit var behaviours: List<AppAgentBehaviour>
+
+        constructor()
+
+        constructor(box: Box,behaviours: List<AppAgentBehaviour>){
+            this.box = box
+            this.behaviours = behaviours
+        }
+
+        override fun exportConfig(): Map<*, *> = mapOf(
+            "box" to box.exportConfig(),
+            "behaviours" to behaviours.map{it.exportConfig()}
+        )
+
+        override fun loadFromExportedConfig(configuration: Map<*, *>): Boolean {
+            if(!Exportable.containKeys(configuration= configuration,"box","behaviours"))
+                return false
+
+            this.box = Box.createFromConfiguration(configuration = configuration["box"] as Map<*,*>)
+            this.behaviours = (configuration["behaviours"] as List<*>).map{
+                AppAgentBehaviour.createFromConfiguration(configuration = it as Map<*, *>)
+            }
+
+            return true
+        }
     }
 }

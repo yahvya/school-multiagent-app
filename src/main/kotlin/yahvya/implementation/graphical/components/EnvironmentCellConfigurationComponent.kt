@@ -15,7 +15,7 @@ import yahvya.implementation.multiagent.environment.EnvironmentCell
 /**
  * @brief environment cell configuration component
  */
-open class EnvironmentCellConfigurationComponents(
+open class EnvironmentCellConfigurationComponent(
     /**
      * @brief allow to print errors
      */
@@ -148,7 +148,7 @@ open class EnvironmentCellConfigurationComponents(
      */
     protected fun validateConfigurationCreation(cellInstance: EnvironmentCell,boxConfigurationComponent: BoxConfigurationComponent){
         // check count of cell
-        val numberMatcher = Regex("[0-9]+")
+        val numberMatcher = Regex("^[0-9]+$")
 
         if(!this.countOfCellField.text.matches(numberMatcher)){
             this.errorPrinter.invoke("Veuillez fournir un nombre de cellules valide")

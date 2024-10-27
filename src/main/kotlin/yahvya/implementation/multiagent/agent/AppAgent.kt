@@ -5,6 +5,7 @@ import yahvya.implementation.configurations.ApplicationConfig
 import yahvya.implementation.multiagent.definitions.Box
 import yahvya.implementation.multiagent.definitions.Exportable
 import yahvya.implementation.multiagent.simulation.Simulation
+import yahvya.implementation.multiagent.simulation.SimulationConfiguration
 
 /**
  * @brief application agent
@@ -53,21 +54,16 @@ class AppAgent : Agent(), Exportable{
         if(
             this.arguments.size < 2 ||
             this.arguments[0] !is Simulation ||
-            this.arguments[1] !is List<*>
+            this.arguments[1] !is SimulationConfiguration.AgentInitialConfig
         )
             return
 
         this.parentSimulation = this.arguments[0] as Simulation
-        val defaultBehaviours = this.arguments[1] as List<*>
+        val defaultConfig = this.arguments[1] as SimulationConfiguration.AgentInitialConfig
 
-        defaultBehaviours.forEach{ potentialDefaultBehaviour ->
-            val potentialDefaultBehaviourAsClass = potentialDefaultBehaviour as Class<*>
+        this.box = defaultConfig.box
 
-            if(!AppAgentBehaviour::class.java.isAssignableFrom(potentialDefaultBehaviourAsClass))
-                return
-
-            this.addAppAgentBehaviour(behaviour = potentialDefaultBehaviourAsClass.getConstructor().newInstance() as AppAgentBehaviour)
-        }
+        defaultConfig.behaviours.forEach{ defaultBehaviour -> this.addAppAgentBehaviour(behaviour = defaultBehaviour)}
     }
 
     override fun loadFromExportedConfig(configuration: Map<*, *>): Boolean {

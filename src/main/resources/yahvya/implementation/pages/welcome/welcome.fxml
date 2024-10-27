@@ -30,11 +30,17 @@
          <font>
             <Font size="13.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="OPEN_HAND" />
+         </cursor>
       </Button>
       <Button layoutX="203.0" layoutY="302.0" mnemonicParsing="false" onMouseClicked="#createNewConfiguration" prefHeight="39.0" prefWidth="193.0" text="Nouvelle configuration">
          <font>
             <Font size="13.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="OPEN_HAND" />
+         </cursor>
       </Button>
       <FontAwesomeIconView fill="#5468ff" glyphName="CLOSE" layoutX="552.0" layoutY="39.0" onMouseClicked="#closeApplication" size="30">
          <cursor>

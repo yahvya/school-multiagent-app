@@ -77,7 +77,7 @@ object TestInit {
     }
 
     class TestBox : Box(){
-        lateinit var name: String
+        var name: String = "default name"
 
         override fun collideWith(x: Double, y: Double): Boolean = true
         

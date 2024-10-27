@@ -9,7 +9,10 @@ import javafx.scene.layout.VBox
 import javafx.stage.FileChooser
 import javafx.stage.StageStyle
 import yahvya.implementation.configurations.ScreensConfig
-import yahvya.implementation.graphical.components.EnvironmentCellConfigurationComponents
+import yahvya.implementation.graphical.components.AppAgentConfigurationComponent
+import yahvya.implementation.graphical.components.EnvironmentCellConfigurationComponent
+import yahvya.implementation.multiagent.agent.AppAgent
+import yahvya.implementation.multiagent.agent.AppAgentBehaviour
 import yahvya.implementation.multiagent.definitions.Box
 import yahvya.implementation.multiagent.environment.EnvironmentCell
 import yahvya.implementation.multiagent.simulation.Simulation
@@ -49,6 +52,11 @@ open class NewConfigurationScreenController : ApplicationController(){
     protected val environmentCells: MutableList<CellConfig> = mutableListOf()
 
     /**
+     * @brief list of agents configurations
+     */
+    var simulationAgents: MutableList<AgentConfig> = mutableListOf()
+
+    /**
      * @brief simulation configuration
      */
     protected lateinit var simulationConfiguration: SimulationConfiguration
@@ -71,7 +79,12 @@ open class NewConfigurationScreenController : ApplicationController(){
         mainStage.isMaximized = true
 
         this.buildInterfaceFromSimulationConfig()
+        this.addEnvironmentCell()
     }
+
+    override fun getStylesheets(): List<String> = listOf(
+        "configuration/new-configuration.css"
+    )
 
     /**
      * @brief build the interface from the provided configuration
@@ -89,17 +102,25 @@ open class NewConfigurationScreenController : ApplicationController(){
             simulationConfiguration.environment.cells.forEach { cell ->
                 addCellConfiguration(cellConfig= cell.exportConfig(), countOfCellsToCreate = 1)
             }
-
             simulationConfiguration.environment.cells.clear()
 
             // show existing agents
+            simulationConfiguration.agentsInitialConfig.forEach { agentInitialConfig ->
+                val tmpAgent = AppAgent().apply{
+                    agentInitialConfig.behaviours.forEach{ defaultBehaviour ->
+                        behaviours.add(defaultBehaviour)
+                    }
+                    box= agentInitialConfig.box
+                }
+                addAgentConfiguration(agentConfig = tmpAgent.exportConfig(), countOfAgentsToCreate = 1)
+            }
             simulationConfiguration.agentsInitialConfig.clear()
         }
     }
 
     /**
      * @brief add a cell
-     * @param cellConfig
+     * @param cellConfig cell config
      * @param countOfCellsToCreate count of cells to create
      */
     protected fun addCellConfiguration(cellConfig: Map<*,*>,countOfCellsToCreate: Int){
@@ -113,8 +134,7 @@ open class NewConfigurationScreenController : ApplicationController(){
 
         recap.spacing = 10.0
         recap.children.addAll(
-            Label("Element d'environnement"),
-            Label("* $countOfCellsToCreate"),
+            Label("Element d'environnement * $countOfCellsToCreate"),
             HBox().apply {
                 spacing = 10.0
                 alignment = Pos.CENTER_LEFT
@@ -125,6 +145,44 @@ open class NewConfigurationScreenController : ApplicationController(){
                         cursor = Cursor.HAND
                         setOnMouseClicked {
                             environmentCells.remove(cellConvertedConfig)
+                            recapZone.children.remove(recap)
+                        }
+                    }
+                )
+            }
+        )
+
+        this.recapZone.children.add(recap)
+    }
+
+    /**
+     * @brief add agent
+     * @param agentConfig agent config
+     * @param countOfAgentsToCreate count of agents to create
+     */
+    protected fun addAgentConfiguration(agentConfig: Map<*,*>,countOfAgentsToCreate: Int){
+        val agentConvertedConfig = AgentConfig(
+            agentConfiguration = agentConfig,
+            countOfAgentsToCreate = countOfAgentsToCreate
+        )
+
+        this.simulationAgents.add(agentConvertedConfig)
+
+        val recap = VBox()
+
+        recap.spacing = 10.0
+        recap.children.addAll(
+            Label("Agent * $countOfAgentsToCreate"),
+            HBox().apply {
+                spacing = 10.0
+                alignment = Pos.CENTER_LEFT
+
+                children.addAll(
+                    Label(AppAgent::class.java.canonicalName),
+                    Button("Supprimer").apply {
+                        cursor = Cursor.HAND
+                        setOnMouseClicked {
+                            simulationAgents.remove(agentConvertedConfig)
                             recapZone.children.remove(recap)
                         }
                     }
@@ -177,19 +235,69 @@ open class NewConfigurationScreenController : ApplicationController(){
         this.addCellConfiguration(cellConfig = cellInstance.exportConfig(), countOfCellsToCreate = countOfCellToCreate)
     }
 
+    /**
+     * @brief register a new agent
+     * @param agentDefaultBehavioursConfigurations the agent default behaviours
+     * @param boxConfiguration agent box configuration
+     * @param countOfAgent count of agent to create
+     * @throws Exception on error
+     */
+    protected fun registerNewAgent(
+        agentDefaultBehavioursConfigurations: List<Map<*,*>>,
+        boxConfiguration: Map<String, String>,
+        boxInstance: Box,
+        countOfAgent: Int
+    ){
+        val modelAgent = AppAgent()
+
+        boxInstance.receiveConfiguration(configuration = boxConfiguration)
+        modelAgent.box = boxInstance
+        agentDefaultBehavioursConfigurations.forEach{ behaviourConfiguration ->
+            modelAgent.behaviours.add(AppAgentBehaviour.createFromConfiguration(configuration = behaviourConfiguration))
+        }
+
+        this.addAgentConfiguration(agentConfig = modelAgent.exportConfig(), countOfAgentsToCreate = countOfAgent)
+    }
+
     @FXML
     fun closeApplication() = this.navigationManager.mainStage.close()
 
     @FXML
     fun addAgent() {
+        try{
+            this.configurationZone.children.apply{
+                val appAgentConfigComponent = AppAgentConfigurationComponent(
+                    errorPrinter = ::showErrorMessage,
+                    creationHandler = { agentDefaultBehavioursConfigurations, boxConfiguration, boxInstance, countOfAgent ->
+                        registerNewAgent(
+                            agentDefaultBehavioursConfigurations= agentDefaultBehavioursConfigurations,
+                            boxConfiguration = boxConfiguration,
+                            boxInstance= boxInstance,
+                            countOfAgent= countOfAgent
+                        )
+                        // refresh interface
+                        addAgent()
+                    }
+                )
 
+                clear()
+                addAll(
+                    Label("Ajouter un agent à la simulation"),
+                    Label("Choisissez la liste des comportements par défaut de l'agent"),
+                    appAgentConfigComponent.build()
+                )
+            }
+        }
+        catch(e:Exception){
+            this.showErrorMessage(errorMessage = "Une erreur s'est produite lors de l'ajout de l'agent <${e.message}>")
+        }
     }
 
     @FXML
     fun addEnvironmentCell() {
         try{
             this.configurationZone.children.apply{
-                val environmentCellComponent = EnvironmentCellConfigurationComponents(
+                val environmentCellComponent = EnvironmentCellConfigurationComponent(
                     errorPrinter = ::showErrorMessage,
                     creationHandler = ::registerNewEnvironmentCell
                 )
@@ -247,14 +355,26 @@ open class NewConfigurationScreenController : ApplicationController(){
                 showGui = showGuiState.isSelected
                 host = jadeHostField.text
                 port = jadePortField.text
-            }
+                environment.apply {
+                    name = environmentNameField.text
+                    // create cells with the defined count of times
+                    environmentCells.forEach{ environmentCellConfig ->
+                        repeat(environmentCellConfig.countOfCellsToCreate) {
+                            cells.add(EnvironmentCell.createFromConfiguration(configuration = environmentCellConfig.cellConfiguration))
+                        }
+                    }
+                }
 
-            this.simulationConfiguration.environment.apply {
-                name = environmentNameField.text
-                // create cells with the defined count of times
-                environmentCells.forEach{ environmentCellConfig ->
-                    repeat(environmentCellConfig.countOfCellsToCreate) {
-                        cells.add(EnvironmentCell.createFromConfiguration(configuration = environmentCellConfig.cellConfiguration))
+                simulationAgents.map{ simulationAgentConfig ->
+                    repeat(simulationAgentConfig.countOfAgentsToCreate) {
+                        val createdAgent = AppAgent()
+
+                        createdAgent.loadFromExportedConfig(configuration = simulationAgentConfig.agentConfiguration)
+                        agentsInitialConfig.add(
+                            SimulationConfiguration.AgentInitialConfig(
+                            box= createdAgent.box,
+                            behaviours = createdAgent.behaviours
+                        ))
                     }
                 }
             }
@@ -274,7 +394,7 @@ open class NewConfigurationScreenController : ApplicationController(){
                 Alert(Alert.AlertType.INFORMATION).apply{
                     title = "Téléchargement"
                     headerText = "Téléchargement réussie"
-                    contentText = "Le téléchargement de la configuration à bien été fait. Les groupes de cellules créé en nombres, seront considérés singulièrement."
+                    contentText = "Le téléchargement de la configuration à bien été fait. Les groupes de cellules et agents créés en nombre, seront considérés singulièrement."
                     dialogPane.minHeight = 210.0
 
                     show()
@@ -303,5 +423,19 @@ open class NewConfigurationScreenController : ApplicationController(){
          * @brief count of cells to create
          */
         val countOfCellsToCreate: Int,
+    )
+
+    /**
+     * @brief agent to register config
+     */
+    data class AgentConfig(
+        /**
+         * @brief agent exported configuration
+         */
+        val agentConfiguration: Map<*,*>,
+        /**
+         * @brief count of agent to create
+         */
+        val countOfAgentsToCreate: Int,
     )
 }

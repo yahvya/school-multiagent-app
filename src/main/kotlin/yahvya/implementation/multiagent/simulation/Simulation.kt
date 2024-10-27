@@ -77,17 +77,17 @@ open class Simulation(
 
     /**
      * @brief add a new agent to the main container
-     * @param defaultBehaviours agent default behaviours
+     * @param initialConfig initial config
      * @return the created controller
      * @throws Exception on error
      */
-    fun addAgentWithDefaultBehaviours(defaultBehaviours: List<Class<out AppAgentBehaviour>>): AgentController{
+    fun addAgentWithDefault(initialConfig: SimulationConfiguration.AgentInitialConfig): AgentController{
         return this.mainContainer.createNewAgent(
             this.agentsIndex.incrementAndGet().toString(),
             AppAgent::class.java.name,
             arrayOf(
                 this,
-                defaultBehaviours
+                initialConfig
             )
         )
     }
@@ -98,9 +98,7 @@ open class Simulation(
         ExportKeys.HOST to this.configuration.host,
         ExportKeys.PORT to this.configuration.port,
         ExportKeys.SHOW_GUI to this.configuration.showGui,
-        ExportKeys.AGENTS_INITIAL_CONFIGURATION to this.configuration.agentsInitialConfig.map{
-            listOfBehavioursClass -> listOfBehavioursClass.map{it.canonicalName}
-        }
+        ExportKeys.AGENTS_INITIAL_CONFIGURATION to this.configuration.agentsInitialConfig.map{it.exportConfig()}
     )
 
     override fun loadFromExportedConfig(configuration: Map<*, *>): Boolean {
@@ -116,10 +114,8 @@ open class Simulation(
             this.configuration.port = configuration[ExportKeys.PORT] as String
             this.configuration.host = configuration[ExportKeys.HOST] as String
             this.configuration.showGui = configuration[ExportKeys.SHOW_GUI] as Boolean
-            this.configuration.agentsInitialConfig = agentsInitialConfigSave.map{ listOfClassCanonicalNames ->
-                (listOfClassCanonicalNames as List<*>).map{ canonicalName ->
-                    AppAgentBehaviour.AVAILABLE_AGENT_BEHAVIOURS_CLASSES.first { it.canonicalName == canonicalName }
-                }
+            this.configuration.agentsInitialConfig = agentsInitialConfigSave.map{
+                SimulationConfiguration.AgentInitialConfig.createFromConfiguration(configuration= it as Map<*, *>)
             }.toMutableList()
 
             this.saveState()
@@ -153,8 +149,8 @@ open class Simulation(
             this.agentsIndex = AtomicInteger(0)
 
             // creating agents
-            this.configuration.agentsInitialConfig.forEach { agentInitialBehaviours ->
-                val agentContainer = this.addAgentWithDefaultBehaviours(defaultBehaviours = agentInitialBehaviours)
+            this.configuration.agentsInitialConfig.forEach { initialConfig ->
+                val agentContainer = this.addAgentWithDefault(initialConfig= initialConfig)
 
                 agentContainer.start()
             }
