@@ -28,6 +28,8 @@ abstract class ApplicationController : AController {
 
     override fun afterLoadingScene() {}
 
+    override fun beforeSwitch() {}
+
     /**
      * @brief called to perform action after receiving datas
      * @throws Nothing

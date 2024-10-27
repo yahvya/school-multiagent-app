@@ -59,7 +59,7 @@ open class WelcomeScreenController : ApplicationController() {
             FileInputStream(chosenFile).use{ inputStream ->
                 val loadedSimulation = SimulationStorage.loadFrom(inputStream = inputStream)
                 this.navigationManager.switchOnController(
-                    fxmlPath = ScreensConfig.NEW_CONFIGURATION_SCREEN,
+                    fxmlPath = ScreensConfig.SIMULATION_SCREEN,
                     datas = loadedSimulation.configuration
                 )
             }

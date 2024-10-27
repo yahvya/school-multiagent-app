@@ -13,4 +13,9 @@ data object ScreensConfig{
      * @brief new configuration creation screen
      */
     const val NEW_CONFIGURATION_SCREEN = "configuration/new-configuration.fxml"
+
+    /**
+     * @brief simulation screen
+     */
+    const val SIMULATION_SCREEN = "simulation/simulation.fxml"
 }

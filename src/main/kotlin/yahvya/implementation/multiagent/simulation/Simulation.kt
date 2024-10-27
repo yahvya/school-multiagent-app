@@ -7,7 +7,6 @@ import jade.wrapper.AgentContainer
 import jade.wrapper.AgentController
 import yahvya.implementation.configurations.ApplicationConfig
 import yahvya.implementation.multiagent.agent.AppAgent
-import yahvya.implementation.multiagent.agent.AppAgentBehaviour
 import yahvya.implementation.multiagent.environment.Environment
 import yahvya.implementation.multiagent.definitions.Exportable
 import java.util.concurrent.atomic.AtomicBoolean
@@ -35,7 +34,7 @@ open class Simulation(
     /**
      * @brief simulation stop state
      */
-    lateinit var stop: AtomicBoolean
+    var stop: AtomicBoolean = AtomicBoolean(true)
 
     /**
      * @brief agents index
@@ -181,7 +180,7 @@ open class Simulation(
      */
     protected fun manageEnd(){
         this.configuration.toDoOnEnd?.invoke(this)
-        this.stop.set(false)
+        this.stop.set(true)
         this.agentsIndex.set(0)
     }
 

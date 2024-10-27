@@ -152,7 +152,7 @@
                         </ScrollPane>
                      </children>
                      <padding>
-                        <Insets top="20.0" />
+                        <Insets bottom="40.0" top="20.0" />
                      </padding>
                   </HBox>
                </children>

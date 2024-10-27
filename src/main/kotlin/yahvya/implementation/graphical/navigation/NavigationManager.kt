@@ -26,6 +26,11 @@ open class NavigationManager(
     protected val pagesStore: HashMap<String, SceneDatas> = HashMap()
 
     /**
+     * @brief current controller
+     */
+    protected var currentController: AController? = null
+
+    /**
      * @brief switch page
      * @param fxmlPath path of the fxml file after the 'PathConfig.pagesBasePath'
      * @param datas datas to provide to the controller or null if no datas
@@ -37,6 +42,7 @@ open class NavigationManager(
 
         val fxmlFinalPath = if(fxmlPath.startsWith("/")) fxmlPath else "/$fxmlPath"
 
+        this.currentController?.beforeSwitch()
         this.mainStage.close()
         this.mainStage = Stage()
 
@@ -61,6 +67,8 @@ open class NavigationManager(
             // load and call controller configuration methods
 
             val sceneController: AController = sceneDatas.fxmlLoader.getController()
+            this.currentController = sceneController
+
             sceneController.receiveDatas(datas= datas, navigationManager= this)
 
             if(sceneController.storeCurrentVersionOnSwitch())

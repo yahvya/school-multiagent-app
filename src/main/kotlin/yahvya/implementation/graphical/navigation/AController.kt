@@ -40,4 +40,9 @@ interface AController {
      * @throws Nothing
      */
     fun getStylesheets():List<String>
+
+    /**
+     * @brief called before navigation manager switch controller
+     */
+    fun beforeSwitch()
 }
