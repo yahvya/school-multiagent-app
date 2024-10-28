@@ -10,9 +10,9 @@ data object ScreensConfig{
     const val WELCOME_SCREEN = "welcome/welcome.fxml"
 
     /**
-     * @brief new configuration creation screen
+     * @brief simulation configuration creation screen
      */
-    const val NEW_CONFIGURATION_SCREEN = "configuration/new-configuration.fxml"
+    const val CONFIGURATION_SCREEN = "configuration/configuration.fxml"
 
     /**
      * @brief simulation screen

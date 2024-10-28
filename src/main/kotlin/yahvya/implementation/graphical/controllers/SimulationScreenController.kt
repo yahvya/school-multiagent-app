@@ -9,6 +9,7 @@ import javafx.scene.layout.AnchorPane
 import javafx.scene.layout.HBox
 import javafx.scene.layout.VBox
 import javafx.stage.StageStyle
+import yahvya.implementation.configurations.ApplicationConfig
 import yahvya.implementation.configurations.ScreensConfig
 import yahvya.implementation.graphical.painter.Painter
 import yahvya.implementation.multiagent.simulation.Simulation
@@ -17,7 +18,10 @@ import yahvya.implementation.multiagent.simulation.SimulationConfiguration
 /**
  * @brief simulation screen
  */
-open class SimulationScreenController : ApplicationController(), Painter{
+open class SimulationScreenController :
+    ApplicationNavbarController(),
+    Painter
+{
     @FXML
     private lateinit var recapZone: HBox
 
@@ -61,7 +65,7 @@ open class SimulationScreenController : ApplicationController(), Painter{
             this.simulationConfiguration = this.datas as SimulationConfiguration
 
         // configure stage
-        val mainStage = this.navigationManager.mainStage
+        val mainStage = ApplicationConfig.NAVIGATION_MANAGER.mainStage
 
         mainStage.initStyle(StageStyle.UNDECORATED)
         mainStage.isMaximized = true
@@ -99,15 +103,9 @@ open class SimulationScreenController : ApplicationController(), Painter{
         }
     }
 
-    @FXML
-    fun backToHome() = this.navigationManager.switchOnController(
-        fxmlPath = ScreensConfig.WELCOME_SCREEN
-    )
-
-    @FXML
-    fun closeApplication(){
+    override fun closeApplication(){
         this.beforeSwitch()
-        this.navigationManager.mainStage.close()
+        ApplicationConfig.NAVIGATION_MANAGER.mainStage.close()
     }
 
     @FXML
@@ -124,14 +122,14 @@ open class SimulationScreenController : ApplicationController(), Painter{
                 this.currentSimulation.configuration.toDoOnEnd = {
                     Platform.runLater{
                         this.simulationStateButton.text = "Lancer la simulation"
-                        this.navigationManager.mainStage.onCloseRequest = null
+                        ApplicationConfig.NAVIGATION_MANAGER.mainStage.onCloseRequest = null
                         this.simulationThread = null
                     }
                 }
                 this.currentSimulation.configuration.painter = this
                 this.simulationThread = Thread(this.currentSimulation)
                 this.simulationThread!!.start()
-                this.navigationManager.mainStage.setOnCloseRequest {
+                ApplicationConfig.NAVIGATION_MANAGER.mainStage.setOnCloseRequest {
                     this.beforeSwitch()
                 }
                 this.simulationStateButton.text = "Stopper la simulation"
@@ -148,8 +146,8 @@ open class SimulationScreenController : ApplicationController(), Painter{
     }
 
     @FXML
-    fun modifySimulation() = this.navigationManager.switchOnController(
-        fxmlPath = ScreensConfig.NEW_CONFIGURATION_SCREEN,
+    fun modifySimulation() = ApplicationConfig.NAVIGATION_MANAGER.switchOnController(
+        fxmlPath = ScreensConfig.CONFIGURATION_SCREEN,
         datas= this.simulationConfiguration
     )
 }

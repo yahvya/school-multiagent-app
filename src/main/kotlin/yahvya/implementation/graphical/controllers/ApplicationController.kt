@@ -8,17 +8,11 @@ import yahvya.implementation.graphical.navigation.NavigationManager
  */
 abstract class ApplicationController : AController {
     /**
-     * @brief linked navigation manager
-     */
-    lateinit var navigationManager: NavigationManager
-
-    /**
      * @brief controller datas
      */
     var datas: Any? = null
 
-    override fun receiveDatas(datas: Any?, navigationManager: NavigationManager) {
-        this.navigationManager = navigationManager
+    override fun receiveDatas(datas: Any?) {
         this.datas = datas
 
         this.performActions()

@@ -69,7 +69,7 @@ open class NavigationManager(
             val sceneController: AController = sceneDatas.fxmlLoader.getController()
             this.currentController = sceneController
 
-            sceneController.receiveDatas(datas= datas, navigationManager= this)
+            sceneController.receiveDatas(datas= datas)
 
             if(sceneController.storeCurrentVersionOnSwitch())
                 this.pagesStore[fxmlFinalPath] = sceneDatas

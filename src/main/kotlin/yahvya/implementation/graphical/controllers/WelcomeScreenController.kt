@@ -7,10 +7,9 @@ import javafx.stage.StageStyle
 import yahvya.implementation.configurations.ApplicationConfig
 import yahvya.implementation.configurations.PathsConfig
 import yahvya.implementation.configurations.ScreensConfig
-import yahvya.implementation.multiagent.simulation.SimulationStorage
+import yahvya.implementation.graphical.functionnalities.loadSimulationConfiguration
 import java.awt.Desktop
 import java.io.File
-import java.io.FileInputStream
 import java.net.URI
 import java.util.Date
 
@@ -32,50 +31,17 @@ open class WelcomeScreenController : ApplicationController() {
     override fun getPageName(): String = "Accueil"
 
     override fun performActions(){
-        val stage = this.navigationManager.mainStage
+        val stage = ApplicationConfig.NAVIGATION_MANAGER.mainStage
 
         stage.initStyle(StageStyle.UNDECORATED)
         stage.centerOnScreen()
     }
 
     @FXML
-    fun createNewConfiguration() {
-        this.navigationManager.switchOnController(fxmlPath = ScreensConfig.NEW_CONFIGURATION_SCREEN)
-    }
+    fun createNewConfiguration() = ApplicationConfig.NAVIGATION_MANAGER.switchOnController(fxmlPath = ScreensConfig.CONFIGURATION_SCREEN)
 
     @FXML
-    fun loadConfiguration() {
-        val fileChooser = FileChooser()
-
-        fileChooser.title = "Choisir le fichier de configuration"
-        fileChooser.extensionFilters.add(FileChooser.ExtensionFilter("Simulation",CONFIGURATION_FILE_EXTENSION))
-
-        val chosenFile = fileChooser.showOpenDialog(this.navigationManager.mainStage)
-
-        if(chosenFile === null)
-            return
-
-        try{
-            FileInputStream(chosenFile).use{ inputStream ->
-                val loadedSimulation = SimulationStorage.loadFrom(inputStream = inputStream)
-                this.navigationManager.switchOnController(
-                    fxmlPath = ScreensConfig.SIMULATION_SCREEN,
-                    datas = loadedSimulation.configuration
-                )
-            }
-        }
-        catch (e: Exception){
-            val alert = Alert(Alert.AlertType.ERROR)
-
-            alert.apply {
-                title = "Erreur"
-                headerText = "Erreur d'ouverture"
-                contentText = "Une erreur s'est produite à l'ouverture <${e.message}>"
-
-                show()
-            }
-        }
-    }
+    fun loadConfiguration() = loadSimulationConfiguration()
 
     @FXML
     fun openAuthorGithub() {
@@ -90,7 +56,7 @@ open class WelcomeScreenController : ApplicationController() {
 
     @FXML
     fun closeApplication() {
-        this.navigationManager.mainStage.close()
+        ApplicationConfig.NAVIGATION_MANAGER.mainStage.close()
     }
 
     @FXML
@@ -111,7 +77,7 @@ open class WelcomeScreenController : ApplicationController() {
         try{
             ApplicationConfig.LOGGER.info("Adding plugin")
 
-            val jarFile = fileChooser.showOpenDialog(this.navigationManager.mainStage)
+            val jarFile = fileChooser.showOpenDialog(ApplicationConfig.NAVIGATION_MANAGER.mainStage)
 
             jarFile?.let {
                 ApplicationConfig.ROOT_CLASS.getResource(PathsConfig.PLUGINS_DIRECTORY_PATH)?.path?.let { path ->

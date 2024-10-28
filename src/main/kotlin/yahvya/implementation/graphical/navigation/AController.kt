@@ -7,10 +7,9 @@ interface AController {
     /**
      * @brief called method to receive the datas on the controller creation and configure the controller
      * @param datas received datas or null if no datas provided
-     * @param navigationManager current navigation manager
      * @throws Nothing
      */
-    fun receiveDatas(datas: Any?,navigationManager: NavigationManager)
+    fun receiveDatas(datas: Any?)
 
     /**
      * @brief called when the scene is updated

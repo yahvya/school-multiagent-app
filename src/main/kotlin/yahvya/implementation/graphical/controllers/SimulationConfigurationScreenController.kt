@@ -10,6 +10,7 @@ import javafx.scene.layout.Region
 import javafx.scene.layout.VBox
 import javafx.stage.FileChooser
 import javafx.stage.StageStyle
+import yahvya.implementation.configurations.ApplicationConfig
 import yahvya.implementation.configurations.ScreensConfig
 import yahvya.implementation.graphical.components.AppAgentConfigurationComponent
 import yahvya.implementation.graphical.components.EnvironmentCellConfigurationComponent
@@ -24,9 +25,9 @@ import java.io.FileOutputStream
 
 
 /**
- * @brief new configuration screen controller
+ * @brief simulation configuration screen controller
  */
-open class NewConfigurationScreenController : ApplicationController(){
+open class SimulationConfigurationScreenController : ApplicationNavbarController(){
     @FXML
     private lateinit var environmentNameField: TextField
 
@@ -75,7 +76,7 @@ open class NewConfigurationScreenController : ApplicationController(){
         this.simulationConfiguration = if(this.datas !== null) this.datas as SimulationConfiguration else SimulationConfiguration(name= "")
 
         // configure stage
-        val mainStage = this.navigationManager.mainStage
+        val mainStage = ApplicationConfig.NAVIGATION_MANAGER.mainStage
 
         mainStage.initStyle(StageStyle.UNDECORATED)
         mainStage.isMaximized = true
@@ -85,7 +86,7 @@ open class NewConfigurationScreenController : ApplicationController(){
     }
 
     override fun getStylesheets(): List<String> = listOf(
-        "configuration/new-configuration.css"
+        "configuration/configuration.css"
     )
 
     /**
@@ -270,9 +271,6 @@ open class NewConfigurationScreenController : ApplicationController(){
     }
 
     @FXML
-    fun closeApplication() = this.navigationManager.mainStage.close()
-
-    @FXML
     fun addAgent() {
         try{
             this.configurationZone.children.apply{
@@ -352,7 +350,7 @@ open class NewConfigurationScreenController : ApplicationController(){
 
         fileChooser.extensionFilters.add(FileChooser.ExtensionFilter("Simulation",WelcomeScreenController.CONFIGURATION_FILE_EXTENSION))
 
-        val chosenFile = fileChooser.showSaveDialog(this.navigationManager.mainStage)
+        val chosenFile = fileChooser.showSaveDialog(ApplicationConfig.NAVIGATION_MANAGER.mainStage)
 
         if(chosenFile === null)
             return
@@ -418,7 +416,7 @@ open class NewConfigurationScreenController : ApplicationController(){
 
     @FXML
     fun goBackToHome() {
-        this.navigationManager.switchOnController(fxmlPath = ScreensConfig.WELCOME_SCREEN)
+        ApplicationConfig.NAVIGATION_MANAGER.switchOnController(fxmlPath = ScreensConfig.WELCOME_SCREEN)
     }
 
     /**
