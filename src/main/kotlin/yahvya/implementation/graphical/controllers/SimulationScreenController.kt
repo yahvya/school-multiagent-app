@@ -2,20 +2,22 @@ package yahvya.implementation.graphical.controllers
 
 import javafx.application.Platform
 import javafx.fxml.FXML
+import javafx.scene.canvas.Canvas
 import javafx.scene.control.Alert
 import javafx.scene.control.Button
 import javafx.scene.control.Label
-import javafx.scene.layout.AnchorPane
 import javafx.scene.layout.HBox
+import javafx.scene.layout.VBox
 import javafx.stage.StageStyle
 import yahvya.implementation.configurations.ScreensConfig
+import yahvya.implementation.graphical.painter.Painter
 import yahvya.implementation.multiagent.simulation.Simulation
 import yahvya.implementation.multiagent.simulation.SimulationConfiguration
 
 /**
  * @brief simulation screen
  */
-open class SimulationScreenController : ApplicationController(){
+open class SimulationScreenController : ApplicationController(), Painter{
     @FXML
     private lateinit var recapZone: HBox
 
@@ -23,10 +25,13 @@ open class SimulationScreenController : ApplicationController(){
     private lateinit var simulationNameLabel: Label
 
     @FXML
-    private lateinit var simulationZone: AnchorPane
+    private lateinit var simulationZone: Canvas
 
     @FXML
     private lateinit var simulationStateButton: Button
+
+    @FXML
+    private lateinit var page: VBox
 
     /**
      * @brief simulation configuration
@@ -61,6 +66,16 @@ open class SimulationScreenController : ApplicationController(){
         mainStage.initStyle(StageStyle.UNDECORATED)
         mainStage.isMaximized = true
 
+        // configure default elements
+        this.simulationZone.apply{
+            widthProperty().bind(recapZone.widthProperty())
+
+            val heightProperty = page
+                .heightProperty()
+                .subtract(page.children.sumOf { childNode -> if (childNode === simulationZone) 0.0 else childNode.boundsInParent.height })
+
+            heightProperty().bind(heightProperty)
+        }
         this.simulationNameLabel.text = if(this::simulationConfiguration.isInitialized) this.simulationConfiguration.name.uppercase() else "Echec de chargement de la configuration"
     }
 
@@ -72,6 +87,10 @@ open class SimulationScreenController : ApplicationController(){
             }
         }
         catch(_:Exception){}
+    }
+
+    override fun applyOnCanvas(toApply: (canvas: Canvas) -> Unit) = Platform.runLater{
+        toApply.invoke(this.simulationZone)
     }
 
     /**
@@ -118,6 +137,7 @@ open class SimulationScreenController : ApplicationController(){
                         this.simulationThread = null
                     }
                 }
+                this.currentSimulation.configuration.painter = this
                 this.simulationThread = Thread(this.currentSimulation)
                 this.simulationThread!!.start()
                 this.navigationManager.mainStage.setOnCloseRequest {

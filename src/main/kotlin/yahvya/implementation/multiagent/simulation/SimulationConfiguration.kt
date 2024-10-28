@@ -1,6 +1,6 @@
 package yahvya.implementation.multiagent.simulation
 
-import yahvya.implementation.multiagent.agent.AppAgent
+import yahvya.implementation.graphical.painter.Painter
 import yahvya.implementation.multiagent.agent.AppAgentBehaviour
 import yahvya.implementation.multiagent.definitions.Box
 import yahvya.implementation.multiagent.definitions.Exportable
@@ -46,7 +46,7 @@ open class SimulationConfiguration(
     /**
      * @brief method to draw an agent
      */
-    var drawAgent: ((agent: AppAgent) -> Unit)? = null
+    var painter: Painter? = null
 
     /**
      * @return the port to use
