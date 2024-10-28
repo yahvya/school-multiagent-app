@@ -18,6 +18,8 @@ module yahvya.implementation {
 
     opens yahvya.implementation.graphical.controllers to javafx.fxml;
 
+    exports yahvya.implementation.multiagent.simulation;
+    exports yahvya.implementation.graphical.painter;
     exports yahvya.implementation.multiagent.environment;
     exports yahvya.implementation.multiagent.definitions;
     exports yahvya.implementation.multiagent.agent;

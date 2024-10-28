@@ -147,6 +147,7 @@ open class Simulation(
             this.stop = AtomicBoolean(false)
             this.agentsIndex = AtomicInteger(0)
 
+            this.configuration.environment.parentSimulation = this
             // creating agents
             this.configuration.agentsInitialConfig.forEach { initialConfig ->
                 val agentContainer = this.addAgentWithDefault(initialConfig= initialConfig)

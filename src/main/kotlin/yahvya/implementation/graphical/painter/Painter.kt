@@ -1,14 +1,14 @@
 package yahvya.implementation.graphical.painter
 
-import javafx.scene.canvas.Canvas
+import javafx.scene.layout.AnchorPane
 
 /**
  * @brief painter element
  */
 interface Painter{
     /**
-     * @brief apply a action on canvas
+     * @brief apply action on canvas
      * @param toApply action to do
      */
-    fun applyOnCanvas(toApply: (canvas:Canvas) -> Unit)
+    fun applyOnCanvas(toApply: (drawZone:AnchorPane) -> Unit)
 }

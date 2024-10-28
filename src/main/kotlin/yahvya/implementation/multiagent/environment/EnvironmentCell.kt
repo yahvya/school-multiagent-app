@@ -102,7 +102,7 @@ abstract class EnvironmentCell: Exportable, Configurable {
      * @return this
      * @throws Nothing
      */
-    fun update(environment: Environment): EnvironmentCell = this
+    open fun update(environment: Environment): EnvironmentCell = this
 
     override fun exportConfig(): Map<*, *> {
         return mapOf<String,Any>(

@@ -2,6 +2,7 @@ package yahvya.implementation.multiagent.environment
 
 import yahvya.implementation.configurations.ApplicationConfig
 import yahvya.implementation.multiagent.definitions.Exportable
+import yahvya.implementation.multiagent.simulation.Simulation
 
 /**
  * @brief environment configuration
@@ -16,6 +17,11 @@ open class Environment : Exportable{
      * @brief environment cells
      */
     var cells: MutableList<EnvironmentCell> = mutableListOf()
+
+    /**
+     * @brief parent simulation
+     */
+    lateinit var parentSimulation: Simulation
 
     companion object{
         /**

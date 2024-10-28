@@ -2,10 +2,10 @@ package yahvya.implementation.graphical.controllers
 
 import javafx.application.Platform
 import javafx.fxml.FXML
-import javafx.scene.canvas.Canvas
 import javafx.scene.control.Alert
 import javafx.scene.control.Button
 import javafx.scene.control.Label
+import javafx.scene.layout.AnchorPane
 import javafx.scene.layout.HBox
 import javafx.scene.layout.VBox
 import javafx.stage.StageStyle
@@ -25,7 +25,7 @@ open class SimulationScreenController : ApplicationController(), Painter{
     private lateinit var simulationNameLabel: Label
 
     @FXML
-    private lateinit var simulationZone: Canvas
+    private lateinit var simulationZone: AnchorPane
 
     @FXML
     private lateinit var simulationStateButton: Button
@@ -67,15 +67,6 @@ open class SimulationScreenController : ApplicationController(), Painter{
         mainStage.isMaximized = true
 
         // configure default elements
-        this.simulationZone.apply{
-            widthProperty().bind(recapZone.widthProperty())
-
-            val heightProperty = page
-                .heightProperty()
-                .subtract(page.children.sumOf { childNode -> if (childNode === simulationZone) 0.0 else childNode.boundsInParent.height })
-
-            heightProperty().bind(heightProperty)
-        }
         this.simulationNameLabel.text = if(this::simulationConfiguration.isInitialized) this.simulationConfiguration.name.uppercase() else "Echec de chargement de la configuration"
     }
 
@@ -89,7 +80,7 @@ open class SimulationScreenController : ApplicationController(), Painter{
         catch(_:Exception){}
     }
 
-    override fun applyOnCanvas(toApply: (canvas: Canvas) -> Unit) = Platform.runLater{
+    override fun applyOnCanvas(toApply: (drawZone: AnchorPane) -> Unit) = Platform.runLater{
         toApply.invoke(this.simulationZone)
     }
 
