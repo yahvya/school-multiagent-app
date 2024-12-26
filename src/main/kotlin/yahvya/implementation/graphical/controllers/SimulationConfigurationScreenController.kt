@@ -415,9 +415,7 @@ open class SimulationConfigurationScreenController : ApplicationNavbarController
     }
 
     @FXML
-    fun goBackToHome() {
-        ApplicationConfig.NAVIGATION_MANAGER.switchOnController(fxmlPath = ScreensConfig.WELCOME_SCREEN)
-    }
+    fun goBackToHome() = ApplicationConfig.NAVIGATION_MANAGER.switchOnController(fxmlPath = ScreensConfig.WELCOME_SCREEN)
 
     /**
      * @brief cell to register config

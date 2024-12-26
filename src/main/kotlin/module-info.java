@@ -1,6 +1,5 @@
 module yahvya.implementation {
     requires javafx.controls;
-    requires kotlin.stdlib;
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
     requires net.synedra.validatorfx;
@@ -15,6 +14,7 @@ module yahvya.implementation {
     requires de.jensd.fx.glyphs.fontawesome;
     requires de.jensd.fx.glyphs.commons;
     requires java.desktop;
+    requires kotlin.reflect;
 
     opens yahvya.implementation.graphical.controllers to javafx.fxml;
 

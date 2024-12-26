@@ -33,6 +33,11 @@
                <children>
                   <HBox fx:id="navigationElements" alignment="CENTER_RIGHT" spacing="20.0">
                      <children>
+                        <Button mnemonicParsing="false" onMouseClicked="#addPlugin" text="Ajouter un plugin">
+                           <graphic>
+                              <FontAwesomeIconView fill="#5468ff" glyphName="UPLOAD" />
+                           </graphic>
+                        </Button>
                         <Button graphicTextGap="10.0" mnemonicParsing="false" onMouseClicked="#createNewConfiguration" text="Nouvelle configuration">
                            <graphic>
                               <FontAwesomeIconView fill="#5468ff" glyphName="PLUS">
