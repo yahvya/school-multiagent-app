@@ -1,8 +1,10 @@
 package yahvya.implementation.multiagent.definitions
 
 import yahvya.implementation.configurations.ApplicationConfig
+import yahvya.implementation.configurations.DefaultPluginsConfig
 import yahvya.implementation.pluginsmanager.loader.PluginsLoader
 import kotlin.collections.get
+import kotlin.reflect.KProperty
 
 /**
  * @brief box
@@ -17,20 +19,22 @@ abstract class Box : Exportable,Configurable{
         /**
          * @brief available box classes from plugins
          */
-        var AVAILABLE_BOX_CLASSES: MutableList<Class<out Box>> = mutableListOf()
-
-        init {
-            this.loadAvailableBoxPlugins()
+        val AVAILABLE_BOX_CLASSES: MutableList<Class<out Box>> by object{
+            operator fun getValue(thisRef: Any?, property: KProperty<*>): MutableList<Class<out Box>> = loadAvailableBoxPlugins()
         }
 
         /**
          * @brief load available box classes
          * @throws Nothing
+         * @return result
          */
-        fun loadAvailableBoxPlugins(){
+        fun loadAvailableBoxPlugins():MutableList<Class<out Box>>{
             ApplicationConfig.LOGGER.info("Loading available box from plugins")
 
-            this.AVAILABLE_BOX_CLASSES = PluginsLoader.loadPluginsClasses<Box>()
+            val result = PluginsLoader.loadPluginsClasses<Box>()
+            result.addAll(DefaultPluginsConfig.DEFAULT_BOXES)
+
+            return result
         }
 
         /**

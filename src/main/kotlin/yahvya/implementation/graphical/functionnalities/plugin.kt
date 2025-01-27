@@ -2,6 +2,7 @@ package yahvya.implementation.graphical.functionnalities
 
 import javafx.scene.control.Alert
 import javafx.stage.FileChooser
+import yahvya.implementation.MultiAgentApplication
 import yahvya.implementation.configurations.ApplicationConfig
 import yahvya.implementation.configurations.PathsConfig
 import java.io.File
@@ -9,6 +10,7 @@ import java.util.*
 
 /**
  * @brief add a new plugin
+ * @attention restart the app on success
  */
 fun addNewPlugin(){
     val alert = Alert(Alert.AlertType.WARNING).apply {
@@ -38,10 +40,10 @@ fun addNewPlugin(){
                 Alert(Alert.AlertType.INFORMATION).apply {
                     title = "Confirmation"
                     headerText = "Le plugin a bien été ajouté"
-                    contentText = "Le plugin a bien été ajouté. Pour charger les modifications, veuillez relancer l'application."
+                    contentText = "Le plugin a bien été ajouté. L'application va redémarrer"
+                }.showAndWait()
 
-                    show()
-                }
+                MultiAgentApplication.restartApp()
             }
         }
     }

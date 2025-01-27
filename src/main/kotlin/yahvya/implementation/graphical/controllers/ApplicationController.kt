@@ -1,7 +1,6 @@
 package yahvya.implementation.graphical.controllers
 
 import yahvya.implementation.graphical.navigation.AController
-import yahvya.implementation.graphical.navigation.NavigationManager
 
 /**
  * @brief application controller

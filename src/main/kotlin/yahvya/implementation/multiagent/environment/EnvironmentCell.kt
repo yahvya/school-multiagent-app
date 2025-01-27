@@ -1,10 +1,12 @@
 package yahvya.implementation.multiagent.environment
 
 import yahvya.implementation.configurations.ApplicationConfig
+import yahvya.implementation.configurations.DefaultPluginsConfig
 import yahvya.implementation.multiagent.definitions.Box
 import yahvya.implementation.multiagent.definitions.Configurable
 import yahvya.implementation.multiagent.definitions.Exportable
 import yahvya.implementation.pluginsmanager.loader.PluginsLoader
+import kotlin.reflect.KProperty
 
 /**
  * @brief environment cell
@@ -24,20 +26,21 @@ abstract class EnvironmentCell: Exportable, Configurable {
         /**
          * @brief available cells classes from plugins
          */
-        var AVAILABLE_CELLS_CLASSES: MutableList<Class<out EnvironmentCell>> = mutableListOf()
-
-        init {
-            this.loadAvailableCellsPlugins()
+        val AVAILABLE_CELLS_CLASSES: MutableList<Class<out EnvironmentCell>> by object {
+            operator fun getValue(thisRef: Any?, property: KProperty<*>): MutableList<Class<out EnvironmentCell>> = loadAvailableCellsPlugins()
         }
 
         /**
          * @brief load available cells classes
          * @throws Nothing
          */
-        fun loadAvailableCellsPlugins(){
+        fun loadAvailableCellsPlugins():MutableList<Class<out EnvironmentCell>>{
             ApplicationConfig.LOGGER.info("Loading available cells from plugins")
 
-            this.AVAILABLE_CELLS_CLASSES = PluginsLoader.loadPluginsClasses<EnvironmentCell>()
+            val result = PluginsLoader.loadPluginsClasses<EnvironmentCell>()
+            result.addAll(DefaultPluginsConfig.DEFAULT_CELLS)
+
+            return result
         }
 
         /**

@@ -2,9 +2,11 @@ package yahvya.implementation.multiagent.agent
 
 import jade.core.behaviours.Behaviour
 import yahvya.implementation.configurations.ApplicationConfig
+import yahvya.implementation.configurations.DefaultPluginsConfig
 import yahvya.implementation.multiagent.definitions.Configurable
 import yahvya.implementation.multiagent.definitions.Exportable
 import yahvya.implementation.pluginsmanager.loader.PluginsLoader
+import kotlin.reflect.KProperty
 
 /**
  * @brief application agent behaviour
@@ -16,18 +18,22 @@ abstract class AppAgentBehaviour : Behaviour(), Exportable, Configurable {
     var configuration: Map<*,*> = mapOf<String,String>()
 
     companion object{
-        var AVAILABLE_AGENT_BEHAVIOURS_CLASSES: MutableList<Class<out AppAgentBehaviour>> = mutableListOf()
-
-        init{
-            this.loadAvailableAgentBehavioursPlugins()
+        val AVAILABLE_AGENT_BEHAVIOURS_CLASSES: MutableList<Class<out AppAgentBehaviour>> by object {
+            operator fun getValue(thisRef: Any?, property: KProperty<*>): MutableList<Class<out AppAgentBehaviour>> = loadAvailableAgentBehavioursPlugins()
         }
 
         /**
          * @brief load the available agent behaviours plugins
          * @throws Nothing
+         * @return plugins list
          */
-        fun loadAvailableAgentBehavioursPlugins(){
-            this.AVAILABLE_AGENT_BEHAVIOURS_CLASSES = PluginsLoader.loadPluginsClasses<AppAgentBehaviour>()
+        fun loadAvailableAgentBehavioursPlugins():MutableList<Class<out AppAgentBehaviour>>{
+            ApplicationConfig.LOGGER.info { "Loading available agent behaviours plugins" }
+
+            val result: MutableList<Class<out AppAgentBehaviour>> = PluginsLoader.loadPluginsClasses<AppAgentBehaviour>()
+            result.addAll(DefaultPluginsConfig.DEFAULT_BEHAVIOURS)
+
+            return result
         }
 
         /**

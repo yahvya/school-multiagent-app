@@ -1,6 +1,7 @@
 package yahvya.implementation
 
 import javafx.application.Application
+import javafx.application.Platform
 import javafx.stage.Stage
 import mu.KotlinLogging
 import yahvya.implementation.configurations.ApplicationConfig
@@ -13,6 +14,27 @@ import yahvya.implementation.graphical.navigation.NavigationManager
  * @brief application
  */
 open class MultiAgentApplication : Application(), InterfaceConfigurator by DefaultInterfaceConfigurator() {
+    companion object{
+        /**
+         * @brief restart the application
+         * @param onCloseFinished action on close finished
+         * @param onCloseError action on close error
+         * @throws Nothing
+         */
+        fun restartApp(onCloseFinished: () -> Unit = {},onCloseError: (Exception) -> Unit = {}){
+            Platform.runLater{
+                try{
+                    ApplicationConfig.NAVIGATION_MANAGER.mainStage.close()
+                    onCloseFinished()
+                    MultiAgentApplication().start(Stage())
+                }
+                catch (e:Exception){
+                    onCloseError(e)
+                }
+            }
+        }
+    }
+
     override fun start(stage: Stage?) {
         if(stage == null) {
             println("Fail to launch app")
@@ -38,7 +60,7 @@ open class MultiAgentApplication : Application(), InterfaceConfigurator by Defau
             ),
             pluginsParentDirectory = "plugins",
             logger =  KotlinLogging.logger {},
-            applicationName = "SimuGand",
+            applicationName = "Simulation",
             authorGithubLink = "https://github.com/yahvya"
         )
 
